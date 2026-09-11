@@ -47,6 +47,7 @@ function scheduleTone(
 export function createAchievementSoundPlayer(windowRef: BrowserWindow): AchievementSoundPlayer {
   let context: AudioContext | undefined;
   let destroyed = false;
+  let activated = false;
   let closePromise: Promise<void> | undefined;
 
   const getContext = () => {
@@ -74,6 +75,13 @@ export function createAchievementSoundPlayer(windowRef: BrowserWindow): Achievem
       if (destroyed) {
         throw new Error('The achievement sound player has been destroyed.');
       }
+
+      // The first paired notification always waits for a page interaction,
+      // even when the browser would otherwise permit autoplay.
+      if (!activated && !userActivation) {
+        throw new Error('Achievement audio is waiting for the first page interaction.');
+      }
+      if (userActivation) activated = true;
 
       const audioContext = getContext();
 

@@ -49,7 +49,7 @@ Copy the files in `docs/examples/` into `content/projects/` or `content/news/`. 
 
 ## Appearance and notifications
 
-Change the color and typography tokens in `skins/default/skin.css`. Language preferences are stored in the visitor's browser; the theme switch applies to the current page and otherwise follows the system appearance. Achievement progress is also stored locally, with no account or server. The two notification triggers are first visit and viewing every home showcase section; edit `site.achievementMessages.unlocked` to change the translated notification text. The module lives in `achievements/` and is loaded by `framework/src/scripts/optional-achievements.ts`.
+Change the color and typography tokens in `skins/default/skin.css`. Language preferences are stored in the visitor's browser; the theme switch applies to the current page and otherwise follows the system appearance. Achievement progress is also stored locally, with no account or server. The two notification triggers are first visit and viewing every home showcase section. The first notification waits for a click, tap or key press so its sound and toast start together; edit `site.achievementMessages.unlocked` to change the translated notification text. The module lives in `achievements/` and is loaded by `framework/src/scripts/optional-achievements.ts`.
 
 # 内容填写说明
 
@@ -71,4 +71,4 @@ Change the color and typography tokens in `skins/default/skin.css`. Language pre
 
 ## 外观与成就通知
 
-外观变量位于 `skins/default/skin.css`。首次访问及浏览完全部首页板块会触发成就通知；提示文字在 `site.achievementMessages.unlocked` 中修改。语言偏好和成就进度保存在访客自己的浏览器中；主题切换作用于当前页面，默认跟随系统外观，不需要账户或服务器。源码保留 MIT 许可声明；网站上的占位素材与文字均可替换为自己的内容。
+外观变量位于 `skins/default/skin.css`。首次访问及浏览完全部首页板块会触发成就通知。首次通知会等待点击、触摸或按键操作，再同时播放提示音和显示弹窗；提示文字在 `site.achievementMessages.unlocked` 中修改。语言偏好和成就进度保存在访客自己的浏览器中；主题切换作用于当前页面，默认跟随系统外观，不需要账户或服务器。源码保留 MIT 许可声明；网站上的占位素材与文字均可替换为自己的内容。
