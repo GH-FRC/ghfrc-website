@@ -283,6 +283,14 @@
   font-size: 11px;
 }
 
+.event-detail__session[data-event-status="past"] .event-status {
+  color: var(--color-muted);
+}
+
+.event-detail__hero[data-event-status="past"] .event-status {
+  color: var(--color-campaign-muted);
+}
+
 .event-detail__registration p:last-child > span {
   display: block;
 }
