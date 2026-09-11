@@ -274,6 +274,18 @@ export const eventSchema = z.discriminatedUnion('entryType', [
     dateText: z.string().min(1),
     timeText: z.string().min(1),
     venue: z.string().min(1),
+    sessions: z.array(z.object({
+      id: z.string().min(1),
+      title: z.string().min(1),
+      startsAt: z.coerce.date(),
+      endsAt: z.coerce.date(),
+      dateText: z.string().min(1),
+      timeText: z.string().min(1),
+      venue: z.string().min(1),
+    }).refine(
+      ({ startsAt, endsAt }) => endsAt.getTime() > startsAt.getTime(),
+      { message: 'An event session must end after it starts.' },
+    )).min(1).optional(),
     cover: localizedImageSchema,
     registration: z.object({
       name: z.string().min(1),

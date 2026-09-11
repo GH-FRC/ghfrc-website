@@ -17,6 +17,7 @@ const pageSlugs = [
   'contact',
 ];
 const locales = ['zh-cn', 'zh-hant', 'en'];
+const nextLanguageLocales = { en: 'zh-cn', 'zh-cn': 'zh-hant', 'zh-hant': 'en' };
 const htmlLanguages = { 'zh-cn': 'zh-CN', 'zh-hant': 'zh-Hant', en: 'en' };
 const automaticRoutes = ['', 'about-frc', ...pageSlugs];
 const localizedRoutes = locales.flatMap((locale) => (
@@ -193,8 +194,7 @@ assert.deepEqual(
 const eventSlugs = simplifiedChineseEventSlugs;
 const eventHtmlFiles = eventSlugs.flatMap((eventSlug) => [
   `events/${eventSlug}/index.html`,
-  `zh-cn/events/${eventSlug}/index.html`,
-  `en/events/${eventSlug}/index.html`,
+  ...locales.map((locale) => `${locale}/events/${eventSlug}/index.html`),
 ]);
 
 for (const relativePath of eventHtmlFiles) {
@@ -205,7 +205,7 @@ for (const relativePath of eventHtmlFiles) {
   );
 }
 
-const localizedEventRoutes = ['zh-cn', 'en'].flatMap((locale) => (
+const localizedEventRoutes = locales.flatMap((locale) => (
   eventSlugs.map((eventSlug) => `${locale}/events/${eventSlug}`)
 ));
 
@@ -215,9 +215,8 @@ for (const route of [...localizedRoutes, ...localizedEventRoutes]) {
   const locale = route.split('/')[0];
   const htmlLanguage = htmlLanguages[locale];
   const pagePath = route.slice(locale.length + 1);
-  const expectedSwitchPaths = locales
-    .filter((candidate) => candidate !== locale)
-    .map((candidate) => `/${candidate}/${pagePath ? `${pagePath}/` : ''}`);
+  const nextLanguageLocale = nextLanguageLocales[locale];
+  const expectedSwitchPath = `/${nextLanguageLocale}/${pagePath ? `${pagePath}/` : ''}`;
 
   assert.equal(countMatches(html, /<title(?:\s|>)/gu), 1, `${relativePath} must have one title.`);
   assert.equal(
@@ -243,14 +242,23 @@ for (const route of [...localizedRoutes, ...localizedEventRoutes]) {
     )),
     `${relativePath} must provide theme colors controlled with the effective page appearance.`,
   );
-  assert.match(html, /data-language-switch/u, `${relativePath} must include language switching.`);
-  for (const expectedSwitchPath of expectedSwitchPaths) {
-    assert.match(
-      html,
-      new RegExp(`href="${expectedSwitchPath}"[^>]*data-language-switch`, 'u'),
-      `${relativePath} must switch to ${expectedSwitchPath}.`,
-    );
-  }
+  const languageSwitches = [...html.matchAll(/<a\b[^>]*\bdata-language-switch(?:\s|=|>)[\s\S]*?<\/a>/gu)];
+  assert.equal(languageSwitches.length, 1, `${relativePath} must include exactly one language switch.`);
+  const languageSwitch = languageSwitches[0][0];
+  assert.match(
+    languageSwitch,
+    new RegExp(`href="${expectedSwitchPath}"`, 'u'),
+    `${relativePath} must cycle to ${expectedSwitchPath}.`,
+  );
+  assert.match(
+    languageSwitch,
+    new RegExp(`data-language-locale="${nextLanguageLocale}"`, 'u'),
+    `${relativePath} must remember the next language in the cycle.`,
+  );
+  assert.match(languageSwitch, /aria-label="[^"]+"/u, `${relativePath} must label the language switch.`);
+  assert.match(languageSwitch, /title="[^"]+"/u, `${relativePath} must explain the language switch on hover.`);
+  assert.match(languageSwitch, /<svg\b[^>]*aria-hidden="true"/u, `${relativePath} must display the fixed language icon.`);
+  assert.doesNotMatch(html, /language-switcher__current/u, `${relativePath} must not retain a separate current-language label.`);
   assert.match(html, /hreflang="zh-CN"/u, `${relativePath} must advertise zh-CN.`);
   assert.match(html, /hreflang="zh-Hant"/u, `${relativePath} must advertise zh-Hant.`);
   assert.match(html, /hreflang="en"/u, `${relativePath} must advertise English.`);
@@ -567,8 +575,14 @@ for (const outputFile of outputFiles) {
       /particle-skin-ui-reference|git-lfs\.github\.com\/spec/iu,
       `Internal reference text entered ${outputFile}.`,
     );
+    // Recruitment instructions may mention QR codes in visible text. Keep
+    // scanning markup, asset references, and expiry information unchanged.
+    const outputWithoutVisibleQrMentions = outputText.replace(
+      />[^<]*</gu,
+      (text) => text.replace(/二维码|二維碼|\bQR(?:[\s-]*code)?\b/giu, ''),
+    );
     assert.doesNotMatch(
-      outputText,
+      outputWithoutVisibleQrMentions,
       /(?:二维码|QR\s*code|qrcode|到期时间|有效期|valid\s+until|expiry\s+date)/iu,
       `Hidden QR-code or expiry information entered ${outputFile}.`,
     );

@@ -2,50 +2,35 @@
 import type { HtmlLanguage, Locale } from '../i18n/locales';
 
 interface Props {
-  currentLanguageLabel: string;
-  currentLanguageName: string;
-  currentShortLabel: string;
   navigationLabel: string;
   navigationLanguage?: string;
-  options: Array<{
+  target: {
     href: string;
     htmlLanguage: HtmlLanguage;
     locale: Locale;
     languageName: string;
-    shortLabel: string;
-  }>;
+  };
 }
 
 const {
-  currentLanguageLabel,
-  currentLanguageName,
-  currentShortLabel,
   navigationLabel,
   navigationLanguage,
-  options,
+  target,
 } = Astro.props;
+const switchLabel = `${navigationLabel}: ${target.languageName}`;
 ---
 
 <nav class="language-switcher" aria-label={navigationLabel} lang={navigationLanguage}>
-  <span
-    class="language-switcher__current"
-    aria-current="page"
-    aria-label={`${currentLanguageLabel}: ${currentLanguageName}`}
+  <a
+    href={target.href}
+    hreflang={target.htmlLanguage}
+    aria-label={switchLabel}
+    title={switchLabel}
+    data-language-switch
+    data-language-locale={target.locale}
   >
-    {currentShortLabel}
-  </span>
-  {
-    options.map((option) => (
-      <a
-        href={option.href}
-        hreflang={option.htmlLanguage}
-        lang={option.htmlLanguage}
-        aria-label={option.languageName}
-        data-language-switch
-        data-language-locale={option.locale}
-      >
-        {option.shortLabel}
-      </a>
-    ))
-  }
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="m5 8 6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-11-5 11M14 18h6"></path>
+    </svg>
+  </a>
 </nav>

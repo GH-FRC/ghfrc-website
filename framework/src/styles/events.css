@@ -256,6 +256,37 @@
   font-weight: 620;
 }
 
+.event-detail__essentials--sessions {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+
+.event-detail__facts--sessions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.event-detail__session dt {
+  display: grid;
+  gap: 10px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.event-detail__session-title {
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.event-detail__session .event-status {
+  font-size: 11px;
+}
+
+.event-detail__registration p:last-child > span {
+  display: block;
+}
+
 .event-detail__registration {
   margin: 0;
   padding: 0 0 0 28px;

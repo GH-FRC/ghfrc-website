@@ -79,8 +79,38 @@ const statusLabel = status === 'past'
     </div>
   </header>
 
-  <section class="event-detail__essentials" aria-label={event.title} data-scroll-section>
-    <dl class="event-detail__facts">
+  <section class:list={["event-detail__essentials", { "event-detail__essentials--sessions": event.sessions?.length }]} aria-label={event.title} data-scroll-section>
+    <dl class:list={["event-detail__facts", { "event-detail__facts--sessions": event.sessions?.length }]}>
+      {event.sessions?.length ? event.sessions.map((session) => {
+        const sessionStatus = getEventStatus(session.startsAt, session.endsAt);
+        const sessionStatusLabel = sessionStatus === 'past'
+          ? labels.pastLabel
+          : sessionStatus === 'ongoing' ? labels.ongoingLabel : labels.upcomingLabel;
+        return (
+          <div
+            class="event-detail__session"
+            data-event-session={session.id}
+            data-event-status-container
+            data-event-starts-at={session.startsAt.toISOString()}
+            data-event-ends-at={session.endsAt.toISOString()}
+            data-event-status={sessionStatus}
+            data-event-upcoming-label={labels.upcomingLabel}
+            data-event-ongoing-label={labels.ongoingLabel}
+            data-event-past-label={labels.pastLabel}
+          >
+            <dt>
+              <span class="event-detail__session-title">{session.title}</span>
+              <span class="event-status" data-event-status-label>{sessionStatusLabel}</span>
+            </dt>
+            <dd>
+              <time datetime={session.startsAt.toISOString()}>{session.dateText}</time>
+              <span>{session.timeText}</span>
+              <span>{session.venue}</span>
+            </dd>
+          </div>
+        );
+      }) : (
+        <>
       <div>
         <dt>{labels.timeLabel}</dt>
         <dd>
@@ -92,10 +122,12 @@ const statusLabel = status === 'past'
         <dt>{labels.venueLabel}</dt>
         <dd>{event.venue}</dd>
       </div>
+        </>
+      )}
     </dl>
     <aside class="event-detail__registration">
       <p>{event.registration.name}</p>
-      <p>{event.registration.instruction}</p>
+      <p>{event.registration.instruction.split('\n').map((line) => <span>{line}</span>)}</p>
     </aside>
   </section>
 
