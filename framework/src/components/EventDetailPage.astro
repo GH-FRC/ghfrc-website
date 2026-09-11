@@ -55,7 +55,7 @@ const statusLabel = status === 'past'
       <div class="event-detail__copy">
         <p class="event-status" data-event-status-label>{statusLabel}</p>
         <h1>{event.title}</h1>
-        <p class="event-detail__summary">{event.summary}</p>
+        {event.summary && <p class="event-detail__summary">{event.summary}</p>}
       </div>
       <figure class="event-detail__visual">
         <img

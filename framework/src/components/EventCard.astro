@@ -49,7 +49,7 @@ const statusLabel = status === 'past'
         <span>{event.timeText}</span>
       </p>
       <h3>{event.title}</h3>
-      <p>{event.summary}</p>
+      {event.summary && <p>{event.summary}</p>}
       <span class="event-card__action">
         {labels.viewEventLabel}
         <span aria-hidden="true">↗</span>

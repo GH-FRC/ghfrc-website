@@ -64,7 +64,7 @@ const showHeroMedia = Boolean(hero.media) || hero.showPlaceholder;
           <div class="home-event-hero__copy">
             <p class="home-event-hero__eyebrow" data-event-status-label>{featuredEvent.label}</p>
             <h1>{featuredEvent.data.title}</h1>
-            <p class="home-event-hero__summary">{featuredEvent.data.summary}</p>
+            {featuredEvent.data.summary && <p class="home-event-hero__summary">{featuredEvent.data.summary}</p>}
             <dl class:list={[
               'home-event-hero__facts',
               { 'home-event-hero__facts--sessions': featuredEvent.data.sessions?.length },
