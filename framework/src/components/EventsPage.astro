@@ -50,7 +50,7 @@ const pastEvents = sortedEvents.filter(
   <header class="events-page__intro" id="page-top" data-scroll-section>
     <p class="page-eyebrow">{labels.eyebrow}</p>
     <h1>{labels.title}</h1>
-    <p>{labels.introduction}</p>
+    {labels.introduction && <p>{labels.introduction}</p>}
   </header>
 
   {

@@ -125,7 +125,7 @@ export const siteSchema = z.object({
     metaDescription: z.string().min(1),
     eyebrow: z.string().min(1),
     title: z.string().min(1),
-    introduction: z.string().min(1),
+    introduction: z.string().min(1).optional(),
     upcomingTitle: z.string().min(1),
     pastTitle: z.string().min(1),
     upcomingLabel: z.string().min(1),
@@ -139,7 +139,7 @@ export const siteSchema = z.object({
   }),
   footer: z.object({
     title: z.string().min(1),
-    placeholder: z.string().min(1),
+    placeholder: z.string().min(1).optional(),
   }),
 });
 
@@ -267,7 +267,7 @@ export const eventSchema = z.discriminatedUnion('entryType', [
   z.object({
     entryType: z.literal('event'),
     title: z.string().min(1),
-    summary: z.string().min(1),
+    summary: z.string().min(1).optional(),
     description: z.string().min(1),
     startsAt: z.coerce.date(),
     endsAt: z.coerce.date(),
