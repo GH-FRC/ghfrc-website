@@ -145,29 +145,15 @@ describe('achievement system', () => {
     );
   });
 
-  it('keeps a blocked notification hidden until an eligible interaction starts its sound', async () => {
-    const start = vi.fn();
-    const prepare = vi
-      .fn<() => Promise<PreparedAchievementSound>>()
-      .mockRejectedValueOnce(new Error('Autoplay blocked'))
-      .mockResolvedValueOnce(createPreparedSound(start));
-
+  it('shows a silent notification when autoplay is blocked without waiting for interaction', async () => {
+    const prepare = vi.fn().mockRejectedValue(new Error('Autoplay blocked'));
     achievementHandle = initializeAchievementSystem({
-      document,
-      soundPlayer: createTestSoundPlayer(prepare),
-      window,
+      document, soundPlayer: createTestSoundPlayer(prepare), window,
     });
-
-    await vi.waitFor(() => expect(prepare).toHaveBeenCalledOnce());
-    await Promise.resolve();
-    expect(document.querySelector('[data-achievement-toast]')).toBeNull();
-
+    await vi.waitFor(() => expect(document.querySelector('[role="status"]')).not.toBeNull());
     window.dispatchEvent(new PointerEvent('pointerdown'));
-
-    await vi.waitFor(() => expect(start).toHaveBeenCalledOnce());
-    expect(document.querySelector('.site-template-achievement-toast__copy')?.textContent?.trim()).toBe(
-      '成就已解锁',
-    );
+    expect(prepare).toHaveBeenCalledOnce();
+    expect(document.querySelectorAll('[data-achievement-toast]')).toHaveLength(1);
   });
 
   it('retries from an activation when the automatic sound preparation never settles', async () => {
@@ -201,7 +187,7 @@ describe('achievement system', () => {
     expect(document.querySelectorAll('[data-achievement-toast]')).toHaveLength(1);
   });
 
-  it('does not display a notification when the browser cannot produce its paired sound', async () => {
+  it('shows a notification when the browser has no audio support', async () => {
     Object.defineProperty(window, 'AudioContext', {
       configurable: true,
       value: undefined,
@@ -209,9 +195,7 @@ describe('achievement system', () => {
 
     achievementHandle = initializeAchievementSystem({ document, window });
 
-    await Promise.resolve();
-    await Promise.resolve();
-    expect(document.querySelector('[data-achievement-toast]')).toBeNull();
+    await vi.waitFor(() => expect(document.querySelector('[role="status"]')).not.toBeNull());
   });
 
   it('keeps first-visit notifications functional when section observation is unavailable', async () => {
@@ -257,8 +241,8 @@ describe('achievement system', () => {
     expect(document.querySelector('[data-achievement-toast]')).toBeNull();
   });
 
-  it('restores a pending first-visit notification after the page is reopened', async () => {
-    const blockedPrepare = vi.fn().mockRejectedValue(new Error('Autoplay blocked'));
+  it('restores a pending first-visit notification interrupted before presentation', async () => {
+    const blockedPrepare = vi.fn(() => new Promise<PreparedAchievementSound>(() => {}));
 
     achievementHandle = initializeAchievementSystem({
       document,
@@ -387,7 +371,7 @@ describe('achievement system', () => {
       secondDocument,
     );
 
-    await vi.waitFor(() => expect(secondPrepare).toHaveBeenCalledTimes(2));
+    expect(window.localStorage.getItem('site-template-achievements:v1:unlocked:all-sections-visited')).not.toBeNull();
     firstHandle.destroy();
     secondHandle.destroy();
   });
@@ -461,7 +445,7 @@ describe('achievement system', () => {
     expect(prepare).toHaveBeenCalledOnce();
 
     TestIntersectionObserver.instances.at(-1)!.emit(['future-section']);
-    await vi.waitFor(() => expect(prepare).toHaveBeenCalledTimes(2));
+    expect(window.localStorage.getItem('site-template-achievements:v1:unlocked:all-sections-visited')).not.toBeNull();
   });
 
   it('recovers safely when stored progress is malformed', async () => {
@@ -614,7 +598,7 @@ describe('achievement system', () => {
     achievementHandle = undefined;
   });
 
-  it('does not expose an accessible notification when sound startup fails', async () => {
+  it('keeps an accessible notification visible when sound startup fails', async () => {
     const start = vi.fn(() => {
       throw new Error('Sound startup failed');
     });
@@ -627,8 +611,8 @@ describe('achievement system', () => {
     });
     await vi.waitFor(() => expect(start).toHaveBeenCalledOnce());
 
-    expect(document.querySelector('[role="status"]')).toBeNull();
-    expect(document.querySelector('[data-achievement-toast]')).toBeNull();
+    expect(document.querySelector('[role="status"]')).not.toBeNull();
+    expect(document.querySelector('[data-achievement-toast]')).not.toBeNull();
   });
 
   it('renders only the fixed unlock message with a neutral decorative icon', async () => {

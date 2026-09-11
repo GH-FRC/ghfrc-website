@@ -119,7 +119,10 @@ export function createAchievementNotificationQueue({
     let shouldAttemptNext = false;
 
     try {
-      const preparedSound = await soundPlayer.prepare({ userActivation });
+      // Browser audio permissions must not suppress the visual notification.
+      const preparedSound = await soundPlayer.prepare({ userActivation }).catch(
+        (): PreparedAchievementSound => ({ start: () => {}, dispose: () => {} }),
+      );
 
       if (destroyed || queuedAchievementIds[0] !== achievementId) {
         preparedSound.dispose();
@@ -156,8 +159,7 @@ export function createAchievementNotificationQueue({
         try {
           preparedSound.start();
         } catch {
-          toast.remove();
-          return;
+          // Keep the accessible toast visible even if sound startup fails.
         }
 
         toast.setAttribute('aria-live', 'polite');
@@ -192,7 +194,7 @@ export function createAchievementNotificationQueue({
         shouldAttemptNext = queuedAchievementIds[0] !== achievementId;
       }
     } catch {
-      // A blocked or unavailable sound leaves the paired notification pending.
+      // A failed presentation remains pending for a later attempt.
     } finally {
       preparationsInProgress.delete(preparationToken);
 
