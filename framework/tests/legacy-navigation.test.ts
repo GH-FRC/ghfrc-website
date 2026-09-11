@@ -10,14 +10,14 @@ describe('legacy homepage section navigation', () => {
     const replace = vi.fn();
 
     const redirected = redirectLegacySection({
-      hash: '#about-frc',
+      hash: '#overview',
       pathname: '/zh-cn/',
       replace,
     });
 
     expect(redirected).toBe(true);
     expect(replace).toHaveBeenCalledOnce();
-    expect(replace).toHaveBeenCalledWith('/zh-cn/frc/');
+    expect(replace).toHaveBeenCalledWith('/zh-cn/overview/');
   });
 
   it('leaves an unknown hash unchanged', () => {
@@ -38,10 +38,10 @@ describe('legacy homepage section navigation', () => {
     const eventTarget = new EventTarget();
 
     const redirectedOnLoad = initializeLegacySectionNavigation(locationRef, eventTarget);
-    locationRef.hash = '#about-frc';
+    locationRef.hash = '#overview';
     eventTarget.dispatchEvent(new Event('hashchange'));
 
     expect(redirectedOnLoad).toBe(false);
-    expect(locationRef.replace).toHaveBeenCalledWith('/en/frc/');
+    expect(locationRef.replace).toHaveBeenCalledWith('/en/overview/');
   });
 });

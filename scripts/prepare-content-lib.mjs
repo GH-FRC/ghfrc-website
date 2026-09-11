@@ -195,7 +195,7 @@ export async function discoverContentSourceFiles(contentRoot) {
     return pageFiles;
   }));
 
-  const robotFiles = await discoverMarkdownFiles(join(contentRoot, 'robots'), { optional: true });
+  const projectFiles = await discoverMarkdownFiles(join(contentRoot, 'projects'), { optional: true });
   const newsFiles = await discoverMarkdownFiles(join(contentRoot, 'news'), { optional: true });
   const eventFiles = (await Promise.all(CONTENT_LOCALES.map((locale) => (
     discoverMarkdownFiles(join(contentRoot, 'events', locale), { optional: true })
@@ -204,7 +204,7 @@ export async function discoverContentSourceFiles(contentRoot) {
   return [
     ...localizedSiteConfigs,
     ...localizedPageFiles.flat(),
-    ...robotFiles,
+    ...projectFiles,
     ...newsFiles,
     ...eventFiles,
   ].sort();

@@ -5,12 +5,12 @@ import { parse } from 'yaml';
 import { resolveLocalizedContent } from '../framework/src/i18n/localized-content.ts';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const contentRoot = process.env.GH_FRC_CONTENT_DIR
-  ? resolve(projectRoot, process.env.GH_FRC_CONTENT_DIR)
+const contentRoot = process.env.SITE_CONTENT_DIR
+  ? resolve(projectRoot, process.env.SITE_CONTENT_DIR)
   : join(projectRoot, 'content');
-const pageIds = ['achievements', 'contact', 'frc', 'news', 'robots', 'sponsors', 'team'];
+const pageIds = ['achievements', 'contact', 'overview', 'news', 'projects', 'sponsors', 'about'];
 const localeChecks = [
-  { directory: 'en', label: 'English', requiredComplete: false },
+  { directory: 'en', label: 'English', requiredComplete: true },
   { directory: 'zh-Hant', label: 'Traditional Chinese', requiredComplete: true },
 ];
 

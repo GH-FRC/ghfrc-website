@@ -3,21 +3,19 @@ navigationId: news
 order: 5
 layout: news
 meta:
-  title: 新闻动态 | 示例队伍官网
-  description: 新闻列表与详情入口的示例页面。
+  title: 动态 | [组织名称]
+  description: "[在这里填写本板块的简短介绍]"
 hero:
-  eyebrow: News
-  title: 新闻动态
-  introduction: 新闻动态介绍内容预留区。
-  mediaLabel: 新闻动态图片或视频预留区
+  eyebrow: 网站模板
+  title: 动态
+  introduction: "[在这里填写本板块的简短介绍]"
 home:
-  title: 新闻动态
-  summary: 新闻动态的首页摘要内容预留区。
-  linkLabel: 查看新闻动态
-  mediaLabel: 新闻动态图片或视频预留区
-detailLinkLabel: 阅读全文
+  title: 动态
+  summary: "[在这里填写本板块的简短介绍]"
+  linkLabel: 查看详情
+  mediaLabel: "[图片或视频]"
 emptyState:
-  eyebrow: News
-  title: 新闻内容预留区
-  body: 发布正式新闻后，此处将显示新闻列表与详情入口。
+  eyebrow: 动态
+  title: 暂无内容
+  body: "[发布后的内容将在这里展示]"
 ---

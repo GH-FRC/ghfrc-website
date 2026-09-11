@@ -1,4 +1,23 @@
 site:
+  language: zh-CN
+  title: "[Organization name]"
+  description: An empty website template for your organization.
+  logo:
+    src: /content/images/logo.svg
+    alt: Logo placeholder
+    intrinsicWidth: 240
+    intrinsicHeight: 80
+  favicon:
+    light:
+      src: /content/images/favicon-light.png
+      alt: Generic browser icon
+      intrinsicWidth: 64
+      intrinsicHeight: 64
+    dark:
+      src: /content/images/favicon-dark.png
+      alt: Generic browser icon
+      intrinsicWidth: 64
+      intrinsicHeight: 64
   accessibility:
     skipToContent: Skip to main content
     mainNavigation: Main navigation
@@ -22,27 +41,40 @@ site:
   achievementMessages:
     unlocked: Achievement unlocked
   placeholderKinds:
-    text: Text area
-    media: Image or video area
-    item: Information area
-    news: News area
-    sponsor: Sponsor Logo area
-    contact: Official contact information area
+    text: Text
+    media: Image or video
+    item: Information
+    news: News
+    sponsor: Partner logo
+    contact: Contact information
   navigation:
+    overview: Overview
+    about-organization: About
     events: Events
+    projects: Projects
+    achievements: Achievements
+    news: News
+    sponsors: Partners
+    contact: Contact
+  hero:
+    eyebrow: Website template
+    title: "[Organization name]"
+    introduction: "[A short introduction to your organization]"
+    mediaLabel: "[Your image or video]"
   events:
-    metaTitle: Events | GHFRC
-    metaDescription: View upcoming and past team events.
-    eyebrow: GHFRC Events
+    metaTitle: Events | [Organization name]
+    metaDescription: View upcoming and past events.
+    eyebrow: Events
     title: Events
-    introduction: Explore the team's published upcoming events and event archive.
-    upcomingTitle: Upcoming Events
-    pastTitle: Past Events
+    upcomingTitle: Upcoming events
+    pastTitle: Past events
     upcomingLabel: Upcoming
-    ongoingLabel: Happening Now
-    pastLabel: Past Event
-    viewEventLabel: View Event
-    emptyLabel: No events have been published yet.
+    ongoingLabel: Happening now
+    pastLabel: Ended
+    viewEventLabel: View event details
+    emptyLabel: No events yet.
     timeLabel: Time
     venueLabel: Venue
-    backLabel: Back to Events
+    backLabel: Back to events
+  footer:
+    title: "[Organization name]"

@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { pageSchema } from '../src/content-schema';
 
 const example = {
-  navigationId: 'about-gh-frc',
+  navigationId: 'about-organization',
   order: 2,
   layout: 'editorial',
-  meta: { title: 'Our club', description: 'A community robotics club.' },
-  hero: { eyebrow: 'Robotics', title: 'Our club', introduction: 'Learning by building.' },
+  meta: { title: 'Our club', description: 'A community projectics club.' },
+  hero: { eyebrow: 'Projectics', title: 'Our club', introduction: 'Learning by building.' },
   home: {
     title: 'Our club', summary: 'Learn about our club.',
     linkLabel: 'Learn more', mediaLabel: 'Club poster',
@@ -27,7 +27,7 @@ describe('editorial media captions', () => {
         mediaCaption: 'Recruitment poster with attribution.',
         media: {
           src: '/content/images/poster.webp',
-          alt: 'Robotics recruitment poster',
+          alt: 'Projectics recruitment poster',
           intrinsicWidth: 1024,
           intrinsicHeight: 1536,
         },

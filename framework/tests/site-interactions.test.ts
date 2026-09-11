@@ -19,14 +19,14 @@ describe('site navigation', () => {
           data-menu-toggle
         >菜单</button>
         <a href="#page-top" data-home-link>Logo</a>
-        <a href="#about-frc" data-section-link>关于 FRC</a>
+        <a href="#overview" data-section-link>关于 FRC</a>
         <nav id="compact-navigation" data-compact-menu hidden>
-          <a href="#about-frc" data-section-link>关于 FRC</a>
+          <a href="#overview" data-section-link>关于 FRC</a>
         </nav>
       </header>
       <main>
         <div id="page-top" data-scroll-section></div>
-        <section id="about-frc" data-scroll-section>关于 FRC</section>
+        <section id="overview" data-scroll-section>关于 FRC</section>
       </main>
     `;
   });
@@ -50,7 +50,7 @@ describe('site navigation', () => {
   });
 
   it('scrolls a navigation target into view when its link is selected', () => {
-    const target = document.querySelector<HTMLElement>('#about-frc');
+    const target = document.querySelector<HTMLElement>('#overview');
     const scrollIntoView = vi.fn();
     target!.scrollIntoView = scrollIntoView;
 
@@ -65,7 +65,7 @@ describe('site navigation', () => {
 
   it('keeps the header visible while navigating downward between sections', () => {
     const header = document.querySelector<HTMLElement>('[data-site-header]')!;
-    const target = document.querySelector<HTMLElement>('#about-frc')!;
+    const target = document.querySelector<HTMLElement>('#overview')!;
     target.scrollIntoView = vi.fn();
     let simulatedScrollY = 160;
 
@@ -93,7 +93,7 @@ describe('site navigation', () => {
     ['pointer input', () => window.dispatchEvent(new PointerEvent('pointerdown'))],
   ])('restores downward header hiding when %s interrupts section navigation', (_, interrupt) => {
     const header = document.querySelector<HTMLElement>('[data-site-header]')!;
-    const target = document.querySelector<HTMLElement>('#about-frc')!;
+    const target = document.querySelector<HTMLElement>('#overview')!;
     target.scrollIntoView = vi.fn();
     let simulatedScrollY = 160;
 
@@ -125,7 +125,7 @@ describe('site navigation', () => {
     secondTarget.dataset.scrollSection = '';
     document.querySelector('main')!.append(secondTarget);
 
-    document.querySelector<HTMLElement>('#about-frc')!.scrollIntoView = vi.fn();
+    document.querySelector<HTMLElement>('#overview')!.scrollIntoView = vi.fn();
     secondTarget.scrollIntoView = vi.fn();
     let simulatedScrollY = 160;
 
@@ -278,7 +278,7 @@ describe('site navigation', () => {
   it('closes the compact navigation when one of its section links is selected', () => {
     const menuToggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
     const compactMenu = document.querySelector<HTMLElement>('[data-compact-menu]')!;
-    const target = document.querySelector<HTMLElement>('#about-frc')!;
+    const target = document.querySelector<HTMLElement>('#overview')!;
     target.scrollIntoView = vi.fn();
 
     interactionHandle = initializeSiteInteractions(document, window);

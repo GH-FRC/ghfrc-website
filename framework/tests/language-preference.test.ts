@@ -200,11 +200,11 @@ describe('unlocalized route redirects', () => {
     expect(
       runLanguageRedirect({
         browserLanguages: ['zh-CN'],
-        hash: '#robots',
+        hash: '#projects',
         search: '?review=1',
         storage: createLanguageStorage('en'),
       }),
-    ).toBe(`/en/?review=1&${AUTOMATIC_LANGUAGE_QUERY_KEY}=en#robots`);
+    ).toBe(`/en/?review=1&${AUTOMATIC_LANGUAGE_QUERY_KEY}=en#projects`);
   });
 
   it('uses the browser locale for a legacy route and preserves its English slug', () => {
@@ -212,11 +212,11 @@ describe('unlocalized route redirects', () => {
       runLanguageRedirect({
         browserLanguages: ['zh-Hant-HK', 'en-US'],
         hash: '#history',
-        pathname: '/about-frc/',
+        pathname: '/overview/',
         search: '?review=1',
       }),
     ).toBe(
-      `/zh-hant/about-frc/?review=1&${AUTOMATIC_LANGUAGE_QUERY_KEY}=zh-hant#history`,
+      `/zh-hant/overview/?review=1&${AUTOMATIC_LANGUAGE_QUERY_KEY}=zh-hant#history`,
     );
   });
 
@@ -248,12 +248,12 @@ describe('unlocalized route redirects', () => {
 describe('explicit and automatic locale visits', () => {
   it('does not persist a browser-detected automatic locale and removes the internal marker', () => {
     const result = runLocaleVisit({
-      hash: '#robots',
+      hash: '#projects',
       search: `?review=1&${AUTOMATIC_LANGUAGE_QUERY_KEY}=en`,
     });
 
     expect(result.storage.getItem(LANGUAGE_STORAGE_KEY)).toBeNull();
-    expect(result.cleanedUrl).toBe('/en/?review=1#robots');
+    expect(result.cleanedUrl).toBe('/en/?review=1#projects');
   });
 
   it('persists a locale selected through an explicit language URL', () => {
@@ -265,7 +265,7 @@ describe('explicit and automatic locale visits', () => {
 
   it('does not turn ordinary same-origin navigation into a manual language choice', () => {
     const result = runLocaleVisit({
-      pathname: '/en/about-frc/',
+      pathname: '/en/overview/',
       referrer: 'http://localhost:3000/en/',
     });
 
@@ -275,21 +275,21 @@ describe('explicit and automatic locale visits', () => {
 
 describe('language switch URLs', () => {
   it('keeps the current English slug and hash when the locale changes', () => {
-    expect(buildLanguageSwitchPath('en', '/zh-hant/about-frc/', '#history')).toBe(
-      '/en/about-frc/#history',
+    expect(buildLanguageSwitchPath('en', '/zh-hant/overview/', '#history')).toBe(
+      '/en/overview/#history',
     );
   });
 
   it('switches directly between both Chinese writing systems', () => {
-    expect(buildLanguageSwitchPath('zh-hant', '/zh-cn/team/')).toBe('/zh-hant/team/');
-    expect(buildLanguageSwitchPath('zh-cn', '/zh-hant/team/')).toBe('/zh-cn/team/');
+    expect(buildLanguageSwitchPath('zh-hant', '/zh-cn/about/')).toBe('/zh-hant/about/');
+    expect(buildLanguageSwitchPath('zh-cn', '/zh-hant/about/')).toBe('/zh-cn/about/');
   });
 
   it('preserves the live query string and page fragment when a language link is activated', () => {
-    window.history.replaceState(null, '', '/en/about-frc/?review=1#history');
+    window.history.replaceState(null, '', '/en/overview/?review=1#history');
     window.localStorage.clear();
     document.body.innerHTML = `
-      <a href="/zh-cn/about-frc/" data-language-switch data-language-locale="zh-cn">中</a>
+      <a href="/zh-cn/overview/" data-language-switch data-language-locale="zh-cn">中</a>
     `;
     const link = document.querySelector<HTMLAnchorElement>('[data-language-switch]');
 
@@ -298,7 +298,7 @@ describe('language switch URLs', () => {
     initializeLanguageSwitchLinks(document, window);
     link?.click();
 
-    expect(link?.href).toBe('http://localhost:3000/zh-cn/about-frc/?review=1#history');
+    expect(link?.href).toBe('http://localhost:3000/zh-cn/overview/?review=1#history');
     expect(window.localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe('zh-cn');
   });
 });

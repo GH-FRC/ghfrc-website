@@ -1,6 +1,6 @@
 import { ACHIEVEMENT_ORDER, type AchievementId, type AchievementProgress } from './achievement-types';
 
-export const ACHIEVEMENT_STORAGE_PREFIX = 'ghfrc-achievements:v1';
+export const ACHIEVEMENT_STORAGE_PREFIX = 'site-template-achievements:v1';
 const STORAGE_KEY = ACHIEVEMENT_STORAGE_PREFIX;
 const STORAGE_VERSION = 1;
 const achievementIds = new Set<string>(ACHIEVEMENT_ORDER);

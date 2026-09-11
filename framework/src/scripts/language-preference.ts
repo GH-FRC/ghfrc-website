@@ -8,8 +8,8 @@ import {
   type Locale,
 } from '../i18n/locales';
 
-export const LANGUAGE_STORAGE_KEY = 'ghfrc-language';
-export const AUTOMATIC_LANGUAGE_QUERY_KEY = '__ghfrc_auto_language';
+export const LANGUAGE_STORAGE_KEY = 'site-template-language';
+export const AUTOMATIC_LANGUAGE_QUERY_KEY = '__site-template_auto_language';
 
 export interface LocalePreferenceOptions {
   browserLanguages?: readonly unknown[];

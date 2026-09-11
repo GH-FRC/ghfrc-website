@@ -3,21 +3,19 @@ navigationId: news
 order: 5
 layout: news
 meta:
-  title: 新聞動態 | 示例隊伍官網
-  description: 新聞列表與詳情入口的示例頁面。
+  title: 動態 | [組織名稱]
+  description: "[在這裡填寫本區塊的簡短介紹]"
 hero:
-  eyebrow: News
-  title: 新聞動態
-  introduction: 新聞動態介紹內容預留區。
-  mediaLabel: 新聞動態圖片或影片預留區
+  eyebrow: 網站範本
+  title: 動態
+  introduction: "[在這裡填寫本區塊的簡短介紹]"
 home:
-  title: 新聞動態
-  summary: 新聞動態的首頁摘要內容預留區。
-  linkLabel: 查看新聞動態
-  mediaLabel: 新聞動態圖片或影片預留區
-detailLinkLabel: 閱讀全文
+  title: 動態
+  summary: "[在這裡填寫本區塊的簡短介紹]"
+  linkLabel: 查看詳情
+  mediaLabel: "[圖片或影片]"
 emptyState:
-  eyebrow: News
-  title: 新聞內容預留區
-  body: 發布正式新聞後，此處將顯示新聞列表與詳情入口。
+  eyebrow: 動態
+  title: 暫無內容
+  body: "[發佈後的內容將在這裡展示]"
 ---

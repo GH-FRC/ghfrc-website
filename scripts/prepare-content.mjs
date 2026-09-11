@@ -11,8 +11,8 @@ import {
 } from './prepare-content-lib.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const contentRoot = process.env.GH_FRC_CONTENT_DIR
-  ? resolve(projectRoot, process.env.GH_FRC_CONTENT_DIR)
+const contentRoot = process.env.SITE_CONTENT_DIR
+  ? resolve(projectRoot, process.env.SITE_CONTENT_DIR)
   : join(projectRoot, 'content');
 const stagingContentRoot = join(projectRoot, 'framework', 'public', 'content');
 const contentDataStore = join(projectRoot, 'framework', 'node_modules', '.astro', 'data-store.json');

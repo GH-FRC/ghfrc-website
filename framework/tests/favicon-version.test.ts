@@ -14,7 +14,7 @@ afterEach(async () => {
 });
 
 async function createPublicAsset(contents: string) {
-  const publicRoot = await mkdtemp(join(tmpdir(), 'ghfrc-favicon-'));
+  const publicRoot = await mkdtemp(join(tmpdir(), 'site-template-favicon-'));
   const assetPath = join(publicRoot, 'content', 'icon.png');
   temporaryDirectories.push(publicRoot);
   await mkdir(dirname(assetPath), { recursive: true });
@@ -31,7 +31,7 @@ describe('favicon cache versioning', () => {
     const contents = 'transparent white favicon';
     const { publicRoot } = await createPublicAsset(contents);
     const href = await versionFavicon('/content/icon.png?source=private', 'dark', publicRoot);
-    const url = new URL(href, 'https://ghfrc.invalid');
+    const url = new URL(href, 'https://template.invalid');
 
     expect(url.pathname).toBe('/content/icon.png');
     expect(url.searchParams.get('source')).toBe('private');

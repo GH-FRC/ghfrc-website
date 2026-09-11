@@ -1,117 +1,48 @@
-# GHFRC Website
+# Organization Website Template
 
-GHFRC Website is the public website codebase and a reusable website template. Framework development, skins, branches, Pull Requests, Issues, and engineering history are maintained in this repository.
+A content-first static website for organizations, companies, and robotics teams. This `template` branch is based on the Preview framework. It includes English, Simplified Chinese, Traditional Chinese, a light/dark theme switch, and Steam-style achievement notifications for a first visit and exploring every home section. No organization data, real events, posters, or contact details are included.
 
-The repository contains only replaceable example content. GHFRC's real website content is maintained separately in a private repository and is not part of this project.
+## Start your own site
 
-## Project Structure
+1. Fork this repository on GitHub. **Uncheck “Copy the default branch only”** so your fork includes `template`. In your fork, select `template` and optionally make it the default branch.
+2. Clone **your fork's** `template` branch. Use Node.js 24 (the exact version is in `.node-version`).
+3. Run `npm ci`, then `npm run dev`. No separate content repository or secret is required.
+4. Edit the files under `content/`; follow [the content guide](docs/content.md). Replace bracketed placeholders and the three generic assets with your own content.
+5. Run `npm run check`, `npm test`, `npm run build`, and `npm run test:dist`.
+6. Deploy to **your own** Cloudflare Pages project following [the deployment guide](docs/deployment.md).
 
-- `framework/`: page structure, components, navigation behavior, and content interfaces.
-- `skins/`: replaceable visual themes and design tokens.
-- `achievements/`: skin-independent achievement rules, progress, notifications, and sound.
-- `content/`: public example content that can be replaced with another team's content.
-- `engineering-logs/`: project-wide same-day goals and completed work.
-- `docs/`: implementation specifications and cross-module documentation.
+The demo is available at [template.ghfrc.pages.dev](https://template.ghfrc.pages.dev). The demo does not provide an online editor or save visitors' content. Your content is edited and versioned in your fork.
 
-The complete sanitized legacy framework and skin history is connected to the `Tony` branch. The public history excludes GHFRC's real content. Use a regular merge commit when merging `Tony` into `main`; do not squash or rebase if the legacy topology must remain visible.
+## Structure
 
-## Use as a Template
-
-1. Download or fork this repository.
-2. Replace the files inside `content/` with your own text and media while keeping the documented structure.
-3. Install dependencies and start the local development server.
-
-```bash
-npm install
-npm run dev
-```
-
-The local website is available at `http://localhost:4321` by default. The project requires Node.js 24.
-
-## Content Source Priority
-
-The build selects one complete content source in the following order:
-
-1. `GH_FRC_CONTENT_DIR`, when explicitly configured.
-2. The public example `content/` folder in this repository.
-
-This keeps public builds on the replaceable example content by default, even when GHFRC's private content repository exists beside the project locally. Set `GH_FRC_CONTENT_DIR` explicitly when a trusted build needs the private content. The selected source must contain locale-specific site configuration under `config/locales/`, exactly seven primary Markdown files in each enabled locale folder under `pages/`, localized event documents under `events/`, the `robots/` and `news/` collection directories, and every media file referenced by those documents. Before each build, the staging script clears the previous staged content and copies only validated, explicitly referenced media from the selected source, so files from different content sets cannot be mixed.
-
-## Languages
-
-The current site generates Simplified Chinese, universal Traditional Chinese, and English content pages under `/zh-cn/`, `/zh-hant/`, and `/en/`. Unprefixed entry routes choose Traditional Chinese for `zh-Hant` and Chinese locales associated with Hong Kong, Macau, or Taiwan; English locales use English, and all remaining or invalid locales default to Simplified Chinese. A visitor's manual choice is stored for later visits, and the language control preserves the current page, query, and fragment when switching.
-
-Simplified Chinese is the complete base content. Traditional Chinese and English files are independent overlays: missing structured fields and stable-ID list items fall back to their Simplified Chinese counterparts, while an empty localized Markdown body falls back to the Simplified Chinese body. The translation report remains non-blocking for English, but English pages stay `noindex` until required English content is complete; Traditional Chinese completeness is required for release.
-
-## Verification
-
-```bash
-npm test
-npm run check
-npm run build
-```
-
-Pull Requests targeting `preview` must pass the `Preview pull request checks` workflow before merging. Direct pushes, force pushes, and branch deletion are blocked for `preview`, including for repository administrators. The request workflow notifies the private content repository after an approved public `preview` update and runs when the repository variable `PREVIEW_DEPLOYMENT_ENABLED` is exactly `true`. It requires the repository Secret `PRIVATE_DEPLOYMENT_TRIGGER_TOKEN`, limited to triggering and reading the private deployment workflow. The private workflow publishes the tested result to `https://preview.ghfrc.pages.dev`, while this public repository records the matching Preview Deployment status without receiving private content or Cloudflare credentials.
+| Path | Purpose |
+| --- | --- |
+| `content/config/locales/` | Site name, logo, icons, navigation labels, home and footer copy |
+| `content/pages/` | Page introductions, body text, achievements, partners and contacts |
+| `content/events/` | Events, with one file per language |
+| `content/projects/`, `content/news/` | Optional project and news entries |
+| `content/media/` | Your images and videos |
+| `framework/` | Page layouts, navigation, localization and theme switching |
+| `achievements/` | Optional Steam-style notification module |
+| `skins/default/skin.css` | Colors, typography and motion tokens |
 
 ## License
 
-The public website code and example content are released under the [MIT License](LICENSE). GHFRC's private content repository and brand assets are not included.
+The framework is available under the [MIT license](LICENSE). Retain its copyright and license notice when redistributing the source. Replace the generic placeholder assets with material you are authorized to publish.
 
-# GHFRC 官网
+# 组织网站模板
 
-GHFRC 官网是公开的网站代码库，也是可复用的网站模板。框架开发、皮肤、分支、Pull Request、Issue 和工程历史均在本仓库中公开维护。
+此 `template` 分支基于 Preview 的网站框架，适用于组织、公司和机器人队伍。保留英文、简体中文、繁体中文切换、明暗主题切换，以及首次访问、浏览全部首页板块时出现的 Steam 风格成就通知。模板不包含任何组织的真实信息、活动、海报或联系方式。
 
-本仓库只包含可替换的示例内容。GHFRC 官网的真实内容单独保存在私有仓库中，不属于本项目的一部分。
+## 开始使用
 
-## 项目结构
+1. 在 GitHub 上 fork 此仓库。**取消勾选 “Copy the default branch only”**，确保自己的仓库包含 `template` 分支；随后可将它设为默认分支。
+2. 克隆自己仓库的 `template` 分支，使用 Node.js 24（准确版本见 `.node-version`）。
+3. 执行 `npm ci`，再执行 `npm run dev`。无需额外的内容仓库或密钥。
+4. 按照[内容填写说明](docs/content.md)修改 `content/`，替换方括号中的占位文字及三张通用占位素材。
+5. 依次执行 `npm run check`、`npm test`、`npm run build` 和 `npm run test:dist`。
+6. 按照[部署说明](docs/deployment.md)发布到自己的 Cloudflare Pages 项目。
 
-- `framework/`：页面结构、组件、导航行为和内容接口。
-- `skins/`：可替换的视觉主题和设计令牌。
-- `achievements/`：不依赖皮肤的成就规则、进度、通知和声音。
-- `content/`：可由其他队伍直接替换的公开示例内容。
-- `engineering-logs/`：项目所有模块当天的目标与实际完成工作。
-- `docs/`：实施规格和跨模块文档。
+[在线模板](https://template.ghfrc.pages.dev)用于浏览效果；当前没有网页编辑或保存内容的功能。内容在使用者自己的仓库中修改和管理。
 
-经过净化的旧框架与皮肤完整历史已经连接到 `Tony` 分支，公开历史不包含 GHFRC 真实内容。将 `Tony` 合并到 `main` 时应使用普通 Merge commit；如需保留旧历史拓扑，不要使用 Squash 或 Rebase。
-
-## 作为模板使用
-
-1. 下载或 Fork 本仓库。
-2. 保持文档约定的结构，用自己的文字和媒体替换 `content/` 中的文件。
-3. 安装依赖并启动本地开发服务器。
-
-```bash
-npm install
-npm run dev
-```
-
-本地网站默认使用 `http://localhost:4321`，项目要求使用 Node.js 24。
-
-## 内容来源优先级
-
-构建时按照以下顺序选择一套完整内容来源：
-
-1. 明确设置的 `GH_FRC_CONTENT_DIR`。
-2. 本仓库中的公开示例 `content/` 文件夹。
-
-这样，即使 GHFRC 私有内容仓库位于本项目旁边，公开构建默认仍会使用可替换的示例内容。只有受信任的构建需要使用私有内容时，才明确设置 `GH_FRC_CONTENT_DIR`。所选来源必须包含 `config/locales/` 下按语言划分的全站配置、`pages/` 下每个启用语言严格对应 7 个主要页面的 Markdown 文件、`events/` 下的本地化活动文档、`robots/` 与 `news/` 内容集合目录，以及这些文档明确引用的全部媒体文件。每次构建前，暂存脚本都会先清空上一次的暂存内容，再从当前内容来源复制经过校验且被明确引用的媒体，因此不会混用不同内容集中的文件。
-
-## 语言
-
-当前网站生成简体中文、通用繁体中文与英文内容页面，路径分别以 `/zh-cn/`、`/zh-hant/` 和 `/en/` 开头。无语言前缀入口会将 `zh-Hant` 以及香港、澳门、台湾相关中文语言映射到通用繁体中文；英文映射到英文，其他语言或无效语言默认使用简体中文。访客的手动选择会留待以后访问继续使用；切换语言时会保留当前页面、查询参数和页面片段。
-
-简体中文是完整基础内容，繁体中文和英文文件是相互独立的覆盖内容：缺失的结构化字段及带稳定 ID 的列表项目会回退到对应简体中文内容；本地化 Markdown 正文为空时，整段正文回退到简体中文。英文翻译检查不会阻断构建，但在必需英文内容全部完成前，英文页面保持 `noindex`；繁体中文必须完整才能发布。
-
-## 验证
-
-```bash
-npm test
-npm run check
-npm run build
-```
-
-以 `preview` 为目标分支的 Pull Request 必须通过 `Preview pull request checks` 工作流后才能合并。`preview` 禁止直接推送、强制推送和删除分支，并且仓库管理员同样不能绕过。请求工作流会在获准合并的公开 `preview` 更新后通知私有内容仓库，并在仓库变量 `PREVIEW_DEPLOYMENT_ENABLED` 严格等于 `true` 时运行。该工作流需要仓库 Secret `PRIVATE_DEPLOYMENT_TRIGGER_TOKEN`，其权限仅限触发和读取私有部署工作流。私有工作流会将通过测试的结果发布至 `https://preview.ghfrc.pages.dev`，公开仓库则记录对应的 Preview Deployment 状态，但不会获得私有内容或 Cloudflare 凭据。
-
-## 许可证
-
-公开网站代码和示例内容使用 [MIT License](LICENSE)。GHFRC 私有内容仓库及品牌资产不包含在内。
+源码遵循 [MIT 许可证](LICENSE)，再次分发源码时须保留版权和许可声明。

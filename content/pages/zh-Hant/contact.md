@@ -3,20 +3,19 @@ navigationId: contact
 order: 7
 layout: contact
 meta:
-  title: 聯絡我們 | 示例隊伍官網
-  description: 隊伍官方聯絡方式的佔位頁面。
+  title: 聯絡我們 | [組織名稱]
+  description: "[在這裡填寫本區塊的簡短介紹]"
 hero:
-  eyebrow: Contact
+  eyebrow: 網站範本
   title: 聯絡我們
-  introduction: 隊伍官方聯絡資訊預留區。
-  mediaLabel: 聯絡資訊展示區域預留區
+  introduction: "[在這裡填寫本區塊的簡短介紹]"
 home:
   title: 聯絡我們
-  summary: 隊伍官方聯絡方式的首頁摘要預留區。
-  linkLabel: 查看聯絡方式
-  mediaLabel: 聯絡資訊展示區域預留區
+  summary: "[在這裡填寫本區塊的簡短介紹]"
+  linkLabel: 查看詳情
+  mediaLabel: "[圖片或影片]"
 emptyState:
-  eyebrow: Contact
-  title: 官方聯絡方式預留區
-  body: 此處將展示隊伍電子郵件、微信號及其他官方聯絡方式，不包含訪客留言表單。
+  eyebrow: 聯絡我們
+  title: 暫無內容
+  body: 暫未新增聯絡資訊。
 ---

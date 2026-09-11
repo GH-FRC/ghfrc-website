@@ -1,5 +1,5 @@
 {
-  "name": "@gh-frc/framework",
+  "name": "@site-template/framework",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,13 +11,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "astro": "7.2.0"
+    "astro": "7.3.2"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@types/node": "24.13.3",
     "happy-dom": "20.11.2",
     "typescript": "6.0.3",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   }
 }

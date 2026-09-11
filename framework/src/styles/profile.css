@@ -1,5 +1,5 @@
 /* Keep the public profile readable without changing other editorial pages. */
-.site-page[data-page-id='about-gh-frc'] .site-page__hero {
+.site-page[data-page-id='about-organization'] .site-page__hero {
   grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
   align-items: start;
   min-height: 0;
@@ -8,7 +8,7 @@
   border-bottom: 0;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__hero-copy h1 {
+.site-page[data-page-id='about-organization'] .site-page__hero-copy h1 {
   max-width: 11ch;
   font-size: clamp(54px, 6.5vw, 96px);
   letter-spacing: -0.045em;
@@ -16,7 +16,7 @@
   text-wrap: balance;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__introduction {
+.site-page[data-page-id='about-organization'] .site-page__introduction {
   max-width: 28em;
   margin-top: 32px;
   font-size: clamp(19px, 1.65vw, 24px);
@@ -24,13 +24,13 @@
   text-wrap: pretty;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__hero-media {
+.site-page[data-page-id='about-organization'] .site-page__hero-media {
   width: 100%;
   max-width: 480px;
   justify-self: end;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__hero-media .media-frame {
+.site-page[data-page-id='about-organization'] .site-page__hero-media .media-frame {
   position: relative;
   min-height: 0;
   aspect-ratio: 4 / 5;
@@ -38,7 +38,7 @@
   background: transparent;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__hero-media img {
+.site-page[data-page-id='about-organization'] .site-page__hero-media img {
   position: absolute;
   inset: 0;
   height: 100%;
@@ -53,32 +53,32 @@
   line-height: 1.7;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__highlights {
+.site-page[data-page-id='about-organization'] .site-page__highlights {
   margin: 0;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__highlights > div {
+.site-page[data-page-id='about-organization'] .site-page__highlights > div {
   min-height: 150px;
   padding: 28px 24px;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__highlights dt {
+.site-page[data-page-id='about-organization'] .site-page__highlights dt {
   margin-bottom: 20px;
   font-size: clamp(30px, 3.5vw, 48px);
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__highlights dd {
+.site-page[data-page-id='about-organization'] .site-page__highlights dd {
   line-height: 1.7;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__prose {
+.site-page[data-page-id='about-organization'] .site-page__prose {
   max-width: 780px;
   margin-inline: auto;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__prose h2 {
+.site-page[data-page-id='about-organization'] .site-page__prose h2 {
   margin-top: 88px;
   padding-top: 40px;
   border-top: 1px solid var(--color-border);
@@ -88,29 +88,29 @@
   text-wrap: balance;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__prose h2:first-child {
+.site-page[data-page-id='about-organization'] .site-page__prose h2:first-child {
   margin-top: 0;
   padding-top: 0;
   border-top: 0;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__prose h3 {
+.site-page[data-page-id='about-organization'] .site-page__prose h3 {
   margin-top: 38px;
   font-size: clamp(21px, 2.1vw, 28px);
   line-height: 1.45;
 }
 
-.site-page[data-page-id='about-gh-frc'] .site-page__prose li {
+.site-page[data-page-id='about-organization'] .site-page__prose li {
   margin-block: 12px;
 }
 
-.home-showcase[id='about-gh-frc'] .media-frame {
+.home-showcase[id='about-organization'] .media-frame {
   min-height: 0;
   border: 0;
   background: transparent;
 }
 
-.home-showcase[id='about-gh-frc'] .media-frame img {
+.home-showcase[id='about-organization'] .media-frame img {
   width: 100%;
   max-height: 660px;
   height: auto;
@@ -118,19 +118,19 @@
 }
 
 @media (max-width: 800px) {
-  .site-page[data-page-id='about-gh-frc'] .site-page__hero {
+  .site-page[data-page-id='about-organization'] .site-page__hero {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .site-page[data-page-id='about-gh-frc'] .site-page__hero-media {
+  .site-page[data-page-id='about-organization'] .site-page__hero-media {
     justify-self: start;
   }
 
-  .site-page[data-page-id='about-gh-frc'] .site-page__highlights {
+  .site-page[data-page-id='about-organization'] .site-page__highlights {
     grid-column: 1 / -1;
   }
 
-  .site-page[data-page-id='about-gh-frc'] .site-page__prose h2 {
+  .site-page[data-page-id='about-organization'] .site-page__prose h2 {
     margin-top: 64px;
   }
 }

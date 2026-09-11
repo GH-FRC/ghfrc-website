@@ -3,20 +3,19 @@ navigationId: achievements
 order: 4
 layout: competition-results
 meta:
-  title: 赛事成果 | 示例队伍官网
-  description: 按赛季展示赛事与奖项的示例页面。
+  title: 成果 | [组织名称]
+  description: "[在这里填写本板块的简短介绍]"
 hero:
-  eyebrow: Achievements
-  title: 赛事成果
-  introduction: 赛事成果介绍内容预留区。
-  mediaLabel: 赛事成果图片或视频预留区
+  eyebrow: 网站模板
+  title: 成果
+  introduction: "[在这里填写本板块的简短介绍]"
 home:
-  title: 赛事成果
-  summary: 赛事与奖项的首页摘要内容预留区。
-  linkLabel: 查看赛事成果
-  mediaLabel: 赛事成果图片或视频预留区
+  title: 成果
+  summary: "[在这里填写本板块的简短介绍]"
+  linkLabel: 查看详情
+  mediaLabel: "[图片或视频]"
 emptyState:
-  eyebrow: Achievements
-  title: 赛事成果内容预留区
-  body: 添加正式赛季资料后，此处将按赛季展示赛事、奖项与代表图片。
+  eyebrow: 成果
+  title: 暂无内容
+  body: "[发布后的内容将在这里展示]"
 ---

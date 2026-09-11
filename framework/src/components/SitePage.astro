@@ -18,9 +18,9 @@ interface Props {
   homeLabelLanguage?: string;
   placeholderKindLabel: string;
   placeholderKindLanguage?: string;
-  robots: Array<{
+  projects: Array<{
     id: string;
-    data: Extract<CollectionEntry<'robot'>['data'], { entryType: 'robot' }>;
+    data: Extract<CollectionEntry<'project'>['data'], { entryType: 'project' }>;
   }>;
   news: Array<{
     id: string;
@@ -39,12 +39,12 @@ const {
   homeLabelLanguage,
   placeholderKindLabel,
   placeholderKindLanguage,
-  robots,
+  projects,
   news,
 } = Astro.props;
 const emptyState = page.emptyState;
 const detailLinkLabel = page.detailLinkLabel ?? page.home.linkLabel;
-const compactEmptyState = page.navigationId === 'robots'
+const compactEmptyState = (page.navigationId === 'projects' && projects.length === 0)
   || page.navigationId === 'sponsors'
   || (
     page.navigationId === 'contact'
@@ -134,31 +134,31 @@ const fallbackGroupLanguage = (prefix: string) => (
   </section>}
 
   {
-    page.layout === 'robots' && (
+    page.layout === 'projects' && (
       <section
         class="poster-stack"
         id={compactEmptyState ? 'page-top' : undefined}
         aria-label={page.hero.title}
-        lang={robots.length > 0 && locale !== 'zh-cn' ? 'zh-CN' : fieldLanguage('hero.title')}
+        lang={projects.length > 0 && locale !== 'zh-cn' ? 'zh-CN' : fieldLanguage('hero.title')}
         data-scroll-section
       >
-        {robots.length > 0 ? (
-          robots.map((robot) => (
+        {projects.length > 0 ? (
+          projects.map((project) => (
             <article class="poster-card">
               <div class="poster-card__media">
                 <MediaFrame
-                  media={robot.data.poster}
-                  placeholderLabel={robot.data.title}
+                  media={project.data.poster}
+                  placeholderLabel={project.data.title}
                   placeholderKindLabel={placeholderKindLabel}
                   placeholderKindLanguage={placeholderKindLanguage}
                   mediaTextLanguage={locale !== 'zh-cn' ? 'zh-CN' : undefined}
                 />
               </div>
               <div class="poster-card__copy">
-                <p class="page-eyebrow">{robot.data.season}</p>
-                <h2>{robot.data.title}</h2>
-                <p>{robot.data.summary}</p>
-                <a class="text-link" href={`/${locale}/robots/${robot.id}/`}>
+                <p class="page-eyebrow">{project.data.season}</p>
+                <h2>{project.data.title}</h2>
+                <p>{project.data.summary}</p>
+                <a class="text-link" href={`/${locale}/projects/${project.id}/`}>
                   <span>{detailLinkLabel}</span>
                   <span aria-hidden="true">↗</span>
                 </a>

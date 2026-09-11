@@ -27,9 +27,9 @@ export function getStaticPaths() {
 }
 
 const { locale, navigationId, contentId } = Astro.props;
-const [localizedContent, robotEntries, newsEntries] = await Promise.all([
+const [localizedContent, projectEntries, newsEntries] = await Promise.all([
   loadLocalizedWebsiteContent(locale),
-  getCollection('robot'),
+  getCollection('project'),
   getCollection('news'),
 ]);
 const localizedPage = localizedContent.pages.find((page) => page.id === contentId);
@@ -41,9 +41,9 @@ if (
   throw new Error(`The localized ${contentId} page content is missing or invalid.`);
 }
 
-const robots = robotEntries
+const projects = projectEntries
   .flatMap((entry) => (
-    entry.data.entryType === 'robot' && entry.data.published
+    entry.data.entryType === 'project' && entry.data.published
       ? [{ id: entry.id, data: entry.data }]
       : []
   ))
@@ -89,7 +89,7 @@ const pageFallbackLanguage = (path: string) => (
     homeLabelLanguage={siteFallbackLanguage('accessibility.homeLabel')}
     placeholderKindLabel={site.placeholderKinds.media}
     placeholderKindLanguage={siteFallbackLanguage('placeholderKinds.media')}
-    robots={robots}
+    projects={projects}
     news={news}
   >
     <Content />

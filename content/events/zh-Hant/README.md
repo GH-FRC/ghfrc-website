@@ -1,7 +1,6 @@
 ---
 entryType: guide
 ---
+Event files go in this directory. See the content guide.
 
-# 活動內容說明
-
-在此資料夾中按活動保存通用繁體中文 Markdown 文件。真實隊伍內容不應加入公開示例倉庫。
+活动文件放在此目录。请参阅内容填写说明。

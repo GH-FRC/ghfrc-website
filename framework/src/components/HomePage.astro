@@ -152,10 +152,7 @@ const fallbackLanguage = (
               {hero.introduction}
             </p>
           </div>
-          <div class:list={[
-            'home-hero__media',
-            hero.media?.src.includes('/brand/ghfrc-logo-square-') && 'home-hero__media--brand',
-          ]}>
+          <div class="home-hero__media">
             <MediaFrame
               media={hero.media}
               placeholderLabel={hero.mediaLabel}

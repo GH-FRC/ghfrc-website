@@ -1,4 +1,4 @@
-.ghfrc-achievement-toast {
+.site-template-achievement-toast {
   position: fixed;
   z-index: 1000;
   right: 24px;
@@ -20,25 +20,25 @@
   pointer-events: none;
   transform: translateX(calc(100% + 36px));
   transition:
-    transform var(--ghfrc-achievement-enter-duration, 350ms) cubic-bezier(0.2, 0.8, 0.2, 1),
-    opacity var(--ghfrc-achievement-enter-duration, 350ms) ease-out;
+    transform var(--site-template-achievement-enter-duration, 350ms) cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity var(--site-template-achievement-enter-duration, 350ms) ease-out;
   will-change: transform, opacity;
 }
 
-.ghfrc-achievement-toast[data-state='visible'] {
+.site-template-achievement-toast[data-state='visible'] {
   opacity: 1;
   transform: translateX(0);
 }
 
-.ghfrc-achievement-toast[data-state='exiting'] {
+.site-template-achievement-toast[data-state='exiting'] {
   opacity: 0;
   transform: translateX(calc(100% + 36px));
   transition-duration:
-    var(--ghfrc-achievement-exit-duration, 350ms),
-    var(--ghfrc-achievement-exit-duration, 350ms);
+    var(--site-template-achievement-exit-duration, 350ms),
+    var(--site-template-achievement-exit-duration, 350ms);
 }
 
-.ghfrc-achievement-toast__icon {
+.site-template-achievement-toast__icon {
   display: grid;
   width: 64px;
   height: 64px;
@@ -51,7 +51,7 @@
   line-height: 1;
 }
 
-.ghfrc-achievement-toast__copy {
+.site-template-achievement-toast__copy {
   overflow: hidden;
   font-size: 16px;
   font-weight: 500;
@@ -62,7 +62,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ghfrc-achievement-toast {
+  .site-template-achievement-toast {
     transition: none;
   }
 }

@@ -65,7 +65,7 @@ export function createAchievementPresentationCoordinator(
 
   return {
     runExclusive: (achievementId: AchievementId, task) => {
-      const lockName = `ghfrc-achievement-presentation:${achievementId}`;
+      const lockName = `site-template-achievement-presentation:${achievementId}`;
       return runWithLocalLock(lockName, () =>
         lockManager ? lockManager.request(lockName, task) : task(),
       );

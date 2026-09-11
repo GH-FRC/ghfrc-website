@@ -3,20 +3,21 @@ navigationId: sponsors
 order: 6
 layout: placeholder
 meta:
-  title: 贊助商 | 示例隊伍官網
-  description: 贊助商內容的佔位頁面。
+  title: 合作夥伴 | [組織名稱]
+  description: "[在這裡填寫本區塊的簡短介紹]"
 hero:
-  eyebrow: Sponsors
-  title: 贊助商
-  introduction: 贊助商介紹內容預留區。
-  mediaLabel: 贊助商標誌預留區
+  eyebrow: 網站範本
+  title: 合作夥伴
+  introduction: "[在這裡填寫本區塊的簡短介紹]"
 home:
-  title: 贊助商
-  summary: 贊助商內容的首頁摘要預留區。
-  linkLabel: 查看贊助商頁面
-  mediaLabel: 贊助商標誌預留區
+  title: 合作夥伴
+  summary: "[在這裡填寫本區塊的簡短介紹]"
+  linkLabel: 查看詳情
+  mediaLabel: "[圖片或影片]"
 emptyState:
-  eyebrow: Sponsors
-  title: 贊助商內容預留區
-  body: 本頁面暫不展示贊助商資料。
+  eyebrow: 合作夥伴
+  title: 暫無內容
+  body: "[發佈後的內容將在這裡展示]"
+  actionLabel: 聯絡我們
+  actionHref: /zh-hant/contact/
 ---

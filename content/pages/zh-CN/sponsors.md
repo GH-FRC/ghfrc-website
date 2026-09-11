@@ -3,20 +3,21 @@ navigationId: sponsors
 order: 6
 layout: placeholder
 meta:
-  title: 赞助商 | 示例队伍官网
-  description: 赞助商内容的占位页面。
+  title: 合作伙伴 | [组织名称]
+  description: "[在这里填写本板块的简短介绍]"
 hero:
-  eyebrow: Sponsors
-  title: 赞助商
-  introduction: 赞助商介绍内容预留区。
-  mediaLabel: 赞助商标志预留区
+  eyebrow: 网站模板
+  title: 合作伙伴
+  introduction: "[在这里填写本板块的简短介绍]"
 home:
-  title: 赞助商
-  summary: 赞助商内容的首页摘要预留区。
-  linkLabel: 查看赞助商页面
-  mediaLabel: 赞助商标志预留区
+  title: 合作伙伴
+  summary: "[在这里填写本板块的简短介绍]"
+  linkLabel: 查看详情
+  mediaLabel: "[图片或视频]"
 emptyState:
-  eyebrow: Sponsors
-  title: 赞助商内容预留区
-  body: 本页面暂不展示赞助商资料。
+  eyebrow: 合作伙伴
+  title: 暂无内容
+  body: "[发布后的内容将在这里展示]"
+  actionLabel: 联系我们
+  actionHref: /zh-cn/contact/
 ---

@@ -1,23 +1,23 @@
 site:
   language: zh-CN
-  title: GHFRC
-  description: GHFRC 队伍官方网站框架
+  title: "[组织名称]"
+  description: 可填写组织内容的空白网站模板。
   logo:
-    src: /content/images/placeholder-logo.png
-    alt: 示例队伍 Logo
-    intrinsicWidth: 400
-    intrinsicHeight: 138
+    src: /content/images/logo.svg
+    alt: 标志占位图
+    intrinsicWidth: 240
+    intrinsicHeight: 80
   favicon:
     light:
-      src: /content/images/placeholder-logo.png
-      alt: 示例队伍浅色标签页图标
-      intrinsicWidth: 400
-      intrinsicHeight: 138
+      src: /content/images/favicon-light.png
+      alt: 通用标签页图标
+      intrinsicWidth: 64
+      intrinsicHeight: 64
     dark:
-      src: /content/images/placeholder-logo.png
-      alt: 示例队伍深色标签页图标
-      intrinsicWidth: 400
-      intrinsicHeight: 138
+      src: /content/images/favicon-dark.png
+      alt: 通用标签页图标
+      intrinsicWidth: 64
+      intrinsicHeight: 64
   accessibility:
     skipToContent: 跳到主要内容
     mainNavigation: 主要导航
@@ -41,42 +41,40 @@ site:
   achievementMessages:
     unlocked: 成就已解锁
   placeholderKinds:
-    text: 文字区域
-    media: 图片或视频区域
-    item: 信息区域
-    news: 新闻内容区域
-    sponsor: 赞助商标志区域
-    contact: 官方联系信息区域
+    text: 文字
+    media: 图片或视频
+    item: 信息
+    news: 动态
+    sponsor: 合作伙伴标志
+    contact: 联系信息
   navigation:
-    about-frc: 关于 FRC
-    about-gh-frc: 关于 GHFRC
+    overview: 概览
+    about-organization: 关于我们
     events: 活动
-    robots: 机器人
-    achievements: 赛事成果
-    news: 新闻动态
-    sponsors: 赞助商
+    projects: 项目
+    achievements: 成果
+    news: 动态
+    sponsors: 合作伙伴
     contact: 联系我们
   hero:
-    eyebrow: 示例队伍官网
-    title: GHFRC
-    introduction: 首页介绍文字预留区
-    mediaLabel: 首页图片或视频预留区
+    eyebrow: 网站模板
+    title: "[组织名称]"
+    introduction: "[在这里填写组织的简短介绍]"
+    mediaLabel: "[图片或视频]"
   events:
-    metaTitle: 活动 | GHFRC
-    metaDescription: 查看队伍近期活动及历史活动。
-    eyebrow: GHFRC 活动
+    metaTitle: 活动 | [组织名称]
+    metaDescription: 查看近期活动与历史活动。
+    eyebrow: 活动
     title: 活动
-    introduction: 查看队伍已经公开的近期活动与历史记录。
     upcomingTitle: 近期活动
     pastTitle: 历史活动
     upcomingLabel: 即将开始
     ongoingLabel: 正在进行
     pastLabel: 已结束
     viewEventLabel: 查看活动详情
-    emptyLabel: 暂无已公开活动
+    emptyLabel: 暂无活动
     timeLabel: 时间
     venueLabel: 地点
     backLabel: 返回活动列表
   footer:
-    title: GHFRC
-    placeholder: 页脚信息预留区
+    title: "[组织名称]"

@@ -9,13 +9,13 @@ import {
   localeOverlaySchema,
   newsSchema,
   pageSchema,
-  robotSchema,
+  projectSchema,
   siteSchema,
 } from './content-schema';
 
 const projectRoot = fileURLToPath(new URL('../../', import.meta.url));
-const contentRoot = process.env.GH_FRC_CONTENT_DIR
-  ? resolve(projectRoot, process.env.GH_FRC_CONTENT_DIR)
+const contentRoot = process.env.SITE_CONTENT_DIR
+  ? resolve(projectRoot, process.env.SITE_CONTENT_DIR)
   : resolve(projectRoot, 'content');
 
 function contentUrl(...segments: string[]) {
@@ -61,12 +61,12 @@ const pageZhHant = defineCollection({
   schema: localeOverlaySchema,
 });
 
-const robot = defineCollection({
+const project = defineCollection({
   loader: glob({
-    base: contentUrl('robots'),
+    base: contentUrl('projects'),
     pattern: '*.md',
   }),
-  schema: robotSchema,
+  schema: projectSchema,
 });
 
 const news = defineCollection({
@@ -90,5 +90,5 @@ const eventZhHant = defineCollection({
   schema: eventSchema,
 });
 export const collections = {
-  event, eventEn, eventZhHant, news, page, pageEn, pageZhHant, robot, site, siteEn, siteZhHant,
+  event, eventEn, eventZhHant, news, page, pageEn, pageZhHant, project, site, siteEn, siteZhHant,
 };

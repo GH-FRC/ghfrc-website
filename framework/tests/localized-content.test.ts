@@ -42,7 +42,7 @@ describe('localized content resolution', () => {
       language: 'zh-CN',
       id: 'hero-media',
       index: '01',
-      name: 'GHFRC',
+      name: 'Website Template',
       website: 'https://example.com/',
       url: 'https://example.com/source',
       surface: 'light',
@@ -74,7 +74,7 @@ describe('localized content resolution', () => {
       },
     };
     const english = {
-      name: 'GHFRC',
+      name: 'Website Template',
       logo: {
         src: '/content/images/hero-en.png',
         alt: 'English image description',

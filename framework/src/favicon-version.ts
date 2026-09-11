@@ -4,7 +4,7 @@ import { resolve, sep } from 'node:path';
 
 type FaviconVariant = 'light' | 'dark';
 
-const LOCAL_ASSET_ORIGIN = 'https://ghfrc.invalid';
+const LOCAL_ASSET_ORIGIN = 'https://template.invalid';
 const FAVICON_HASH_LENGTH = 12;
 
 function resolvePublicAsset(src: string, publicRoot: string) {

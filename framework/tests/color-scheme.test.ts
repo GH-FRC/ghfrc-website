@@ -27,13 +27,13 @@ describe('color scheme pre-paint bootstrap', () => {
   });
 
   it('ignores an earlier manual choice and restores the system preference on reload', () => {
-    sessionStorage.setItem('ghfrc-color-scheme', 'dark');
+    sessionStorage.setItem('site-template-color-scheme', 'dark');
     document.documentElement.dataset.colorScheme = 'light';
 
     runColorSchemeBootstrap();
 
     expect(document.documentElement.dataset.colorScheme).toBeUndefined();
-    expect(sessionStorage.getItem('ghfrc-color-scheme')).toBe('dark');
+    expect(sessionStorage.getItem('site-template-color-scheme')).toBe('dark');
   });
 
   it('does not depend on browser storage', () => {
@@ -139,7 +139,7 @@ describe('color scheme controls', () => {
     toggle.click();
 
     expect(document.documentElement.dataset.colorScheme).toBe('dark');
-    expect(sessionStorage.getItem('ghfrc-color-scheme')).toBeNull();
+    expect(sessionStorage.getItem('site-template-color-scheme')).toBeNull();
     expect(toggle.getAttribute('aria-label')).toBe('切换至浅色模式');
 
     interactionHandle.destroy();

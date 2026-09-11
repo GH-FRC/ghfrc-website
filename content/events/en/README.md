@@ -1,7 +1,6 @@
 ---
 entryType: guide
 ---
+Event files go in this directory. See the content guide.
 
-# Event Content Guide
-
-Store one English Markdown file per event in this folder. Do not add a team's private content to the public example repository.
+活动文件放在此目录。请参阅内容填写说明。

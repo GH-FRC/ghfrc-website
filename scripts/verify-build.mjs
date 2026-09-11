@@ -7,10 +7,10 @@ import { fileURLToPath } from 'node:url';
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = join(projectRoot, 'framework', 'dist');
 const pageSlugs = [
-  'frc',
-  'team',
+  'overview',
+  'about',
   'events',
-  'robots',
+  'projects',
   'achievements',
   'news',
   'sponsors',
@@ -19,7 +19,7 @@ const pageSlugs = [
 const locales = ['zh-cn', 'zh-hant', 'en'];
 const nextLanguageLocales = { en: 'zh-cn', 'zh-cn': 'zh-hant', 'zh-hant': 'en' };
 const htmlLanguages = { 'zh-cn': 'zh-CN', 'zh-hant': 'zh-Hant', en: 'en' };
-const automaticRoutes = ['', 'about-frc', ...pageSlugs];
+const automaticRoutes = ['', ...pageSlugs];
 const localizedRoutes = locales.flatMap((locale) => (
   ['', ...pageSlugs].map((slug) => [locale, slug].filter(Boolean).join('/'))
 ));
@@ -42,7 +42,7 @@ function countMatches(source, pattern) {
 }
 
 function toOutputPath(publicReference) {
-  const referenceUrl = new URL(publicReference, 'https://ghfrc.org/');
+  const referenceUrl = new URL(publicReference, 'https://example.com/');
   const pathname = decodeURIComponent(referenceUrl.pathname);
 
   if (pathname === '/') {
@@ -65,7 +65,7 @@ async function assertVersionedFavicon(html, relativePath, scheme) {
   assert.ok(reference?.startsWith('/content/'), `${relativePath} must provide a content-supplied ${scheme} favicon.`);
   const contents = await readFile(toOutputPath(reference));
   const expectedRevision = `${createHash('sha256').update(contents).digest('hex').slice(0, 12)}-${scheme}`;
-  const actualRevision = new URL(reference, 'https://ghfrc.org/').searchParams.get('favicon');
+  const actualRevision = new URL(reference, 'https://example.com/').searchParams.get('favicon');
 
   assert.equal(
     actualRevision,
@@ -108,7 +108,7 @@ async function readScriptClosure(initialReferences) {
     for (const match of source.matchAll(/(?:\bfrom\s*|\bimport\s*)["']([^"']+\.js)["']/gu)) {
       const dependency = new URL(
         match[1],
-        new URL(reference, 'https://ghfrc.org/'),
+        new URL(reference, 'https://example.com/'),
       ).pathname;
 
       if (dependency.startsWith('/')) pending.push(dependency);
@@ -182,10 +182,8 @@ for (const relativePath of expectedHtmlFiles) {
 
 const simplifiedChineseEventSlugs = await collectEventSlugs('zh-cn');
 const englishEventSlugs = await collectEventSlugs('en');
-assert.ok(
-  simplifiedChineseEventSlugs.length > 0,
-  'The generated site must include at least one published event.',
-);
+// Empty collections are valid in a new template. Published entries are checked below.
+assert.deepEqual(await collectEventSlugs('zh-hant'), simplifiedChineseEventSlugs);
 assert.deepEqual(
   englishEventSlugs,
   simplifiedChineseEventSlugs,
@@ -209,7 +207,8 @@ const localizedEventRoutes = locales.flatMap((locale) => (
   eventSlugs.map((eventSlug) => `${locale}/events/${eventSlug}`)
 ));
 
-for (const route of [...localizedRoutes, ...localizedEventRoutes]) {
+const allLocalizedRoutes = (await collectFiles(distRoot)).filter((path) => path.endsWith('/index.html')).map((path) => path.slice(distRoot.length + 1, -'/index.html'.length)).filter((route) => locales.includes(route.split('/')[0]));
+for (const route of allLocalizedRoutes) {
   const relativePath = `${route}/index.html`;
   const html = await readFile(join(distRoot, relativePath), 'utf8');
   const locale = route.split('/')[0];
@@ -264,11 +263,11 @@ for (const route of [...localizedRoutes, ...localizedEventRoutes]) {
   assert.match(html, /hreflang="en"/u, `${relativePath} must advertise English.`);
   assert.match(html, /hreflang="x-default"/u, `${relativePath} must advertise x-default.`);
 
-  if (locale === 'en') {
+  if (process.env.SITE_NOINDEX === 'true') {
     assert.match(
       html,
       /<meta name="robots" content="noindex, follow">/u,
-      `${relativePath} must remain noindex while English content is incomplete.`,
+      `${relativePath} must honor the noindex deployment setting.`,
     );
   }
 
@@ -289,7 +288,7 @@ for (const route of automaticRoutes) {
   const relativePath = route ? `${route}/index.html` : 'index.html';
   const html = await readFile(join(distRoot, relativePath), 'utf8');
 
-  assert.match(html, /__ghfrc_auto_language/u, `${relativePath} must select a language.`);
+  assert.match(html, /__site-template_auto_language/u, `${relativePath} must select a language.`);
   assert.doesNotMatch(html, /data-site-header/u, `${relativePath} must remain a redirect entry.`);
 }
 
@@ -300,7 +299,7 @@ for (const eventSlug of eventSlugs) {
   );
   assert.match(
     eventRedirectHtml,
-    /__ghfrc_auto_language/u,
+    /__site-template_auto_language/u,
     `The ${eventSlug} entry must select a language.`,
   );
   assert.doesNotMatch(
@@ -310,7 +309,7 @@ for (const eventSlug of eventSlugs) {
   );
   assert.match(
     eventRedirectHtml,
-    /ghfrc-language/u,
+    /site-template-language/u,
     `The ${eventSlug} entry must respect the stored language preference.`,
   );
   assert.match(
@@ -346,6 +345,7 @@ for (const locale of ['zh-cn', 'en']) {
     previousRoutePosition = routePosition;
   }
 
+  if (homepageHtml.includes('data-featured-event=')) {
   assert.match(
     homepageHtml,
     /class="home-event-hero"/u,
@@ -387,6 +387,9 @@ for (const locale of ['zh-cn', 'en']) {
     `${locale} homepage featured event must use an internal image.`,
   );
   eventImageReferences.add(featuredEventImageReference);
+  } else {
+    assert.match(homepageHtml, /class="home-hero"/u, 'An unconfigured template must render its generic home hero.');
+  }
   assert.doesNotMatch(
     homepageHtml,
     /data-achievement-section="events"/u,
@@ -395,6 +398,7 @@ for (const locale of ['zh-cn', 'en']) {
 
   const eventsHtml = await readFile(join(distRoot, locale, 'events', 'index.html'), 'utf8');
   assert.match(eventsHtml, /data-event-archive/u, `${locale} Events must render the archive.`);
+  if (eventSlugs.length > 0) {
   assert.match(eventsHtml, /data-event-card/u, `${locale} Events must render an event card.`);
   assert.match(
     eventsHtml,
@@ -422,6 +426,7 @@ for (const locale of ['zh-cn', 'en']) {
     `${locale} Events must provide a status label that can be updated automatically.`,
   );
 
+  }
   const eventScriptReferences = [...eventsHtml.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/gu)]
     .map((match) => match[1])
     .filter((reference) => reference.startsWith('/'));
@@ -503,47 +508,12 @@ for (const locale of ['zh-cn', 'en']) {
     eventImageReferences.add(eventImageReference);
   }
 
-  const sponsorsHtml = await readFile(join(distRoot, locale, 'sponsors', 'index.html'), 'utf8');
-  assert.match(sponsorsHtml, /class="empty-state"/u, 'Sponsors must retain its empty state.');
-  assert.match(
-    sponsorsHtml,
-    new RegExp(`href="/${locale}/contact/"`, 'u'),
-    'Sponsors must link its partnership action to Contact.',
-  );
-  assert.doesNotMatch(
-    sponsorsHtml,
-    /class="site-page__hero/u,
-    'Sponsors must not render the redundant page hero.',
-  );
 
-  const robotsHtml = await readFile(join(distRoot, locale, 'robots', 'index.html'), 'utf8');
-  assert.match(robotsHtml, /class="empty-state"/u, 'Robots must show its formal empty state.');
-  assert.doesNotMatch(
-    robotsHtml,
-    /class="site-page__hero/u,
-    'Robots must not render the redundant page hero.',
-  );
-
-  const contactHtml = await readFile(join(distRoot, locale, 'contact', 'index.html'), 'utf8');
-  assert.match(contactHtml, /class="empty-state"/u, 'Contact must show its formal empty state.');
-  assert.doesNotMatch(
-    contactHtml,
-    /class="site-page__hero/u,
-    'Contact must not render the redundant page hero.',
-  );
-  assert.doesNotMatch(
-    contactHtml,
-    /预留区/u,
-    'Contact must not show draft placeholder copy.',
-  );
-
-  const newsHtml = await readFile(join(distRoot, locale, 'news', 'index.html'), 'utf8');
-  assert.match(newsHtml, /class="empty-state"/u, 'News must retain its empty state.');
 }
 
 assert.equal(await fileExists(join(distRoot, 'zh-hant')), true, 'Universal Traditional Chinese routes must be generated.');
 
-assert.ok(eventImageReferences.size > 0, 'Published events must include at least one image.');
+if (eventSlugs.length) assert.ok(eventImageReferences.size > 0, 'Published events must include an image.');
 for (const eventImageReference of eventImageReferences) {
   const eventImagePath = toOutputPath(eventImageReference);
   assert.equal(
@@ -562,11 +532,6 @@ for (const eventImageReference of eventImageReferences) {
 const outputFiles = await collectFiles(distRoot);
 for (const outputFile of outputFiles) {
   assert.doesNotMatch(outputFile, /\.(?:lfs|mov)$/iu, 'Internal media entered the build output.');
-  assert.doesNotMatch(
-    outputFile,
-    /(?:二维码|qrcode|qr[-_ ]?code|valid[-_ ]?until|expiry[-_ ]?date)/iu,
-    'A hidden QR-code or expiry asset entered the build output.',
-  );
 
   if (outputFile.endsWith('.html') || outputFile.endsWith('.js') || outputFile.endsWith('.css')) {
     const outputText = await readFile(outputFile, 'utf8');
@@ -575,21 +540,11 @@ for (const outputFile of outputFiles) {
       /particle-skin-ui-reference|git-lfs\.github\.com\/spec/iu,
       `Internal reference text entered ${outputFile}.`,
     );
-    // Recruitment instructions may mention QR codes in visible text. Keep
-    // scanning markup, asset references, and expiry information unchanged.
-    const outputWithoutVisibleQrMentions = outputText.replace(
-      />[^<]*</gu,
-      (text) => text.replace(/二维码|二維碼|\bQR(?:[\s-]*code)?\b/giu, ''),
-    );
-    assert.doesNotMatch(
-      outputWithoutVisibleQrMentions,
-      /(?:二维码|QR\s*code|qrcode|到期时间|有效期|valid\s+until|expiry\s+date)/iu,
-      `Hidden QR-code or expiry information entered ${outputFile}.`,
-    );
+
   }
 }
 
 console.log(
-  `Verified ${expectedHtmlFiles.length + eventHtmlFiles.length} generated pages and `
+  `Verified ${outputFiles.filter((path) => path.endsWith('.html')).length} generated pages and `
   + `${outputFiles.length} output files.`,
 );

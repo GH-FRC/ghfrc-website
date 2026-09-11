@@ -37,7 +37,7 @@ describe('localized content media schemas', () => {
     expect(
       siteSchema.shape.hero.parse({
         eyebrow: 'Team website',
-        title: 'GHFRC',
+        title: 'Website Template',
         introduction: 'Introduction',
         mediaLabel: 'Media',
         media: {
@@ -80,7 +80,7 @@ describe('localized content media schemas', () => {
 
   it('requires all featured-event homepage fields together', () => {
     expect(() => siteSchema.shape.hero.parse({
-      eyebrow: 'GHFRC',
+      eyebrow: 'Website Template',
       title: 'Home',
       introduction: 'Introduction',
       mediaLabel: 'Media',
@@ -91,7 +91,7 @@ describe('localized content media schemas', () => {
   it('accepts a complete event with a valid time range', () => {
     expect(eventSchema.parse({
       entryType: 'event',
-      title: 'Example Robotics Open House',
+      title: 'Example Projectics Open House',
       summary: 'Public summary',
       description: 'Search description',
       startsAt: '2030-01-10T10:00:00+08:00',
@@ -102,7 +102,7 @@ describe('localized content media schemas', () => {
       cover: {
         type: 'image',
         src: '/content/images/events/example-event.png',
-        alt: 'Students viewing a robotics demonstration',
+        alt: 'Students viewing a projectics demonstration',
         intrinsicWidth: 1600,
         intrinsicHeight: 1200,
       },

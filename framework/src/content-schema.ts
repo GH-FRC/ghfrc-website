@@ -88,10 +88,10 @@ export const siteSchema = z.object({
     contact: z.string().min(1),
   }),
   navigation: z.object({
-    'about-frc': z.string().min(1),
-    'about-gh-frc': z.string().min(1),
+    'overview': z.string().min(1),
+    'about-organization': z.string().min(1),
     events: z.string().min(1),
-    robots: z.string().min(1),
+    projects: z.string().min(1),
     achievements: z.string().min(1),
     news: z.string().min(1),
     sponsors: z.string().min(1),
@@ -145,10 +145,10 @@ export const siteSchema = z.object({
 
 export const pageSchema = z.object({
   navigationId: z.enum([
-    'about-frc',
-    'about-gh-frc',
+    'overview',
+    'about-organization',
     'events',
-    'robots',
+    'projects',
     'achievements',
     'news',
     'sponsors',
@@ -157,7 +157,7 @@ export const pageSchema = z.object({
   order: z.number().int().min(1).max(7),
   layout: z.enum([
     'editorial',
-    'robots',
+    'projects',
     'competition-results',
     'news',
     'placeholder',
@@ -230,12 +230,12 @@ export const pageSchema = z.object({
   }).optional(),
 });
 
-export const robotSchema = z.discriminatedUnion('entryType', [
+export const projectSchema = z.discriminatedUnion('entryType', [
   z.object({
     entryType: z.literal('guide'),
   }),
   z.object({
-    entryType: z.literal('robot'),
+    entryType: z.literal('project'),
     title: z.string().min(1),
     season: z.string().min(1),
     summary: z.string().min(1),

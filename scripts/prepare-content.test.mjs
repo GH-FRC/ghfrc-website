@@ -18,13 +18,13 @@ test('extracts media references from YAML and Markdown text', () => {
 logo:
   src: /content/images/team-logo.png
 
-![Robot poster](/content/images/robots/2026-poster.webp)
+![Project poster](/content/images/projects/2026-poster.webp)
 <video src="/content/videos/reveal.mp4"></video>
 `;
 
   assert.deepEqual(extractMediaReferences(source), [
     '/content/images/team-logo.png',
-    '/content/images/robots/2026-poster.webp',
+    '/content/images/projects/2026-poster.webp',
     '/content/videos/reveal.mp4',
   ]);
 });
@@ -79,7 +79,7 @@ test('deduplicates repeated media references across text sources', () => {
 });
 
 test('clears staged media and the Astro content cache before changing content sources', async (t) => {
-  const temporaryRoot = await mkdtemp(join(tmpdir(), 'ghfrc-content-reset-'));
+  const temporaryRoot = await mkdtemp(join(tmpdir(), 'site-template-content-reset-'));
   t.after(() => rm(temporaryRoot, { force: true, recursive: true }));
 
   const stagingContentRoot = join(temporaryRoot, 'public', 'content');
@@ -96,13 +96,13 @@ test('clears staged media and the Astro content cache before changing content so
 });
 
 test('discovers configured Markdown source trees recursively', async (t) => {
-  const contentRoot = await mkdtemp(join(tmpdir(), 'ghfrc-content-sources-'));
+  const contentRoot = await mkdtemp(join(tmpdir(), 'site-template-content-sources-'));
   t.after(() => rm(contentRoot, { force: true, recursive: true }));
 
   const pageNames = [
-    'frc',
-    'team',
-    'robots',
+    'overview',
+    'about',
+    'projects',
     'achievements',
     'news',
     'sponsors',
@@ -115,7 +115,7 @@ test('discovers configured Markdown source trees recursively', async (t) => {
     ...pageNames.map((pageName) => `pages/zh-CN/${pageName}.md`),
     ...pageNames.map((pageName) => `pages/zh-Hant/${pageName}.md`),
     ...pageNames.map((pageName) => `pages/en/${pageName}.md`),
-    'robots/seasons/2026.md',
+    'projects/seasons/2026.md',
     'news/2026/kickoff.md',
     'events/zh-CN/2026-info-session.md',
     'events/zh-Hant/2026-info-session.md',
@@ -145,7 +145,7 @@ test('discovers configured Markdown source trees recursively', async (t) => {
 });
 
 test('requires exactly seven page Markdown files for every enabled locale', async (t) => {
-  const contentRoot = await mkdtemp(join(tmpdir(), 'ghfrc-content-pages-'));
+  const contentRoot = await mkdtemp(join(tmpdir(), 'site-template-content-pages-'));
   t.after(() => rm(contentRoot, { force: true, recursive: true }));
 
   await mkdir(join(contentRoot, 'config', 'locales', 'zh-CN'), { recursive: true });
@@ -198,7 +198,7 @@ test('requires exactly seven page Markdown files for every enabled locale', asyn
 });
 
 test('rejects media paths containing symbolic links', async (t) => {
-  const contentRoot = await mkdtemp(join(tmpdir(), 'ghfrc-content-symlink-'));
+  const contentRoot = await mkdtemp(join(tmpdir(), 'site-template-content-symlink-'));
   t.after(() => rm(contentRoot, { force: true, recursive: true }));
 
   const mediaRoot = join(contentRoot, 'media');
@@ -215,7 +215,7 @@ test('rejects media paths containing symbolic links', async (t) => {
 });
 
 test('rejects symbolic links in recursively discovered text sources', async (t) => {
-  const contentRoot = await mkdtemp(join(tmpdir(), 'ghfrc-content-source-link-'));
+  const contentRoot = await mkdtemp(join(tmpdir(), 'site-template-content-source-link-'));
   t.after(() => rm(contentRoot, { force: true, recursive: true }));
 
   await mkdir(join(contentRoot, 'config', 'locales', 'zh-CN'), { recursive: true });
@@ -224,7 +224,7 @@ test('rejects symbolic links in recursively discovered text sources', async (t) 
   await mkdir(join(contentRoot, 'pages', 'zh-CN'), { recursive: true });
   await mkdir(join(contentRoot, 'pages', 'zh-Hant'), { recursive: true });
   await mkdir(join(contentRoot, 'pages', 'en'), { recursive: true });
-  await mkdir(join(contentRoot, 'robots'), { recursive: true });
+  await mkdir(join(contentRoot, 'projects'), { recursive: true });
   await writeFile(
     join(contentRoot, 'config', 'locales', 'zh-CN', 'site.yaml'),
     'site: example\n',
@@ -259,9 +259,9 @@ test('rejects symbolic links in recursively discovered text sources', async (t) 
     );
   }
 
-  const linkedSource = join(contentRoot, 'linked-robot.md');
+  const linkedSource = join(contentRoot, 'linked-project.md');
   await writeFile(linkedSource, 'linked source\n', 'utf8');
-  await symlink(linkedSource, join(contentRoot, 'robots', '2026.md'));
+  await symlink(linkedSource, join(contentRoot, 'projects', '2026.md'));
 
   await assert.rejects(
     discoverContentSourceFiles(contentRoot),

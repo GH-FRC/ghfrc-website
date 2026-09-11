@@ -54,22 +54,22 @@ function createToast(
   timings: AchievementNotificationTimings,
 ): HTMLElement {
   const toast = documentRef.createElement('div');
-  toast.className = 'ghfrc-achievement-toast';
+  toast.className = 'site-template-achievement-toast';
   toast.dataset.achievementId = achievementId;
   toast.dataset.state = 'entering';
   toast.dataset.achievementToast = '';
   toast.setAttribute('aria-hidden', 'true');
-  toast.style.setProperty('--ghfrc-achievement-enter-duration', `${timings.enterMs}ms`);
-  toast.style.setProperty('--ghfrc-achievement-exit-duration', `${timings.exitMs}ms`);
+  toast.style.setProperty('--site-template-achievement-enter-duration', `${timings.enterMs}ms`);
+  toast.style.setProperty('--site-template-achievement-exit-duration', `${timings.exitMs}ms`);
 
   const icon = documentRef.createElement('span');
-  icon.className = 'ghfrc-achievement-toast__icon';
+  icon.className = 'site-template-achievement-toast__icon';
   icon.setAttribute('aria-hidden', 'true');
   icon.dataset.achievementPlaceholderIcon = '';
   icon.textContent = '✓';
 
   const copy = documentRef.createElement('span');
-  copy.className = 'ghfrc-achievement-toast__copy';
+  copy.className = 'site-template-achievement-toast__copy';
   copy.lang = notificationLanguage;
   copy.textContent = notificationText;
 

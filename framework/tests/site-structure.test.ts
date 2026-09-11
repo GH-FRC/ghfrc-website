@@ -8,10 +8,10 @@ import {
 } from '../src/site-structure';
 
 const labels = {
-  'about-frc': '关于 FRC',
-  'about-gh-frc': '关于 GHFRC',
+  'overview': '关于 FRC',
+  'about-organization': '关于 Website Template',
   events: '活动',
-  robots: '机器人',
+  projects: '机器人',
   achievements: '赛事成果',
   news: '新闻动态',
   sponsors: '赞助商',
@@ -21,10 +21,10 @@ const labels = {
 describe('site page structure', () => {
   it('publishes all eight Preview navigation destinations as independent routes', () => {
     expect(sitePagePlan.map(({ id, contentId }) => [id, contentId])).toEqual([
-      ['about-frc', 'frc'],
-      ['about-gh-frc', 'team'],
+      ['overview', 'overview'],
+      ['about-organization', 'about'],
       ['events', 'events'],
-      ['robots', 'robots'],
+      ['projects', 'projects'],
       ['achievements', 'achievements'],
       ['news', 'news'],
       ['sponsors', 'sponsors'],
@@ -33,26 +33,26 @@ describe('site page structure', () => {
   });
 
   it('marks only the current independent page in global navigation', () => {
-    const items = buildSiteNavigationItems(labels, 'robots', 'en');
+    const items = buildSiteNavigationItems(labels, 'projects', 'en');
 
     expect(items.filter(({ isCurrent }) => isCurrent)).toEqual([
-      expect.objectContaining({ href: '/en/robots/', label: '机器人' }),
+      expect.objectContaining({ href: '/en/projects/', label: '机器人' }),
     ]);
     expect(items.every(({ href }) => href.startsWith('/'))).toBe(true);
   });
 
   it('builds localized page paths with stable English slugs', () => {
-    expect(localizedPageHref('zh-cn', 'frc')).toBe('/zh-cn/frc/');
-    expect(localizedPageHref('zh-hant', 'frc')).toBe('/zh-hant/frc/');
-    expect(localizedPageHref('en', 'frc')).toBe('/en/frc/');
+    expect(localizedPageHref('zh-cn', 'overview')).toBe('/zh-cn/overview/');
+    expect(localizedPageHref('zh-hant', 'overview')).toBe('/zh-hant/overview/');
+    expect(localizedPageHref('en', 'overview')).toBe('/en/overview/');
   });
 
   it('maps legacy homepage section hashes to their independent routes', () => {
-    expect(resolveLegacySectionRoute('#about-frc')).toBe('/frc/');
-    expect(resolveLegacySectionRoute('#about-xplore')).toBeUndefined();
-    expect(resolveLegacySectionRoute('#about-gh-frc')).toBe('/team/');
+    expect(resolveLegacySectionRoute('#overview')).toBe('/overview/');
+    expect(resolveLegacySectionRoute('#unused-section')).toBeUndefined();
+    expect(resolveLegacySectionRoute('#about-organization')).toBe('/about/');
     expect(resolveLegacySectionRoute('#events')).toBe('/events/');
-    expect(resolveLegacySectionRoute('#robots')).toBe('/robots/');
+    expect(resolveLegacySectionRoute('#projects')).toBe('/projects/');
     expect(resolveLegacySectionRoute('#achievements')).toBe('/achievements/');
     expect(resolveLegacySectionRoute('#news')).toBe('/news/');
     expect(resolveLegacySectionRoute('#sponsors')).toBe('/sponsors/');
