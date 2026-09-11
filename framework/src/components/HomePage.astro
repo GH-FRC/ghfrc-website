@@ -2,6 +2,7 @@
 import type { EventContent, PageContent, SiteContent } from '../content-schema';
 import type { SitePageId } from '../site-structure';
 import MediaFrame from './MediaFrame.astro';
+import { getEventStatus } from '../scripts/event-status';
 
 interface HomePageItem {
   id: SitePageId;
@@ -64,7 +65,43 @@ const showHeroMedia = Boolean(hero.media) || hero.showPlaceholder;
             <p class="home-event-hero__eyebrow" data-event-status-label>{featuredEvent.label}</p>
             <h1>{featuredEvent.data.title}</h1>
             <p class="home-event-hero__summary">{featuredEvent.data.summary}</p>
-            <dl class="home-event-hero__facts">
+            <dl class:list={[
+              'home-event-hero__facts',
+              { 'home-event-hero__facts--sessions': featuredEvent.data.sessions?.length },
+            ]}>
+              {featuredEvent.data.sessions?.length ? (
+                featuredEvent.data.sessions.map((session) => {
+                  const status = getEventStatus(session.startsAt, session.endsAt);
+                  const statusLabel = status === 'past' ? featuredEvent.pastLabel
+                    : status === 'ongoing' ? featuredEvent.ongoingLabel
+                    : featuredEvent.upcomingLabel;
+
+                  return (
+                    <div
+                      class="home-event-hero__session"
+                      data-event-session={session.id}
+                      data-event-status-container
+                      data-event-starts-at={session.startsAt.toISOString()}
+                      data-event-ends-at={session.endsAt.toISOString()}
+                      data-event-status={status}
+                      data-event-upcoming-label={featuredEvent.upcomingLabel}
+                      data-event-ongoing-label={featuredEvent.ongoingLabel}
+                      data-event-past-label={featuredEvent.pastLabel}
+                    >
+                      <dt>
+                        <span class="home-event-hero__session-title">{session.title}</span>
+                        <span class="event-status" data-event-status-label>{statusLabel}</span>
+                      </dt>
+                      <dd>
+                        <time datetime={session.startsAt.toISOString()}>{session.dateText}</time>
+                        <span>{session.timeText}</span>
+                        <span>{session.venue}</span>
+                      </dd>
+                    </div>
+                  );
+                })
+              ) : (
+                <>
               <div>
                 <dt class="sr-only">{featuredEvent.timeLabel}</dt>
                 <dd>
@@ -78,6 +115,8 @@ const showHeroMedia = Boolean(hero.media) || hero.showPlaceholder;
                 <dt class="sr-only">{featuredEvent.venueLabel}</dt>
                 <dd>{featuredEvent.data.venue}</dd>
               </div>
+                </>
+              )}
             </dl>
             <a class="home-event-hero__action" href={featuredEvent.href}>
               <span>{featuredEvent.linkLabel}</span>

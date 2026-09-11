@@ -90,6 +90,33 @@
   font-size: 12px;
 }
 
+.home-event-hero__facts--sessions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.home-event-hero__session dt {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.home-event-hero__session-title {
+  min-height: 2.8em;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.home-event-hero__session .event-status {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.home-event-hero__session[data-event-status="past"] .event-status {
+  color: var(--color-campaign-muted);
+}
+
 .home-event-hero__action {
   display: inline-flex;
   gap: 16px;
@@ -359,6 +386,10 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
     margin-top: 32px;
+  }
+
+  .home-event-hero__session-title {
+    min-height: 0;
   }
 
   .home-event-hero__action {

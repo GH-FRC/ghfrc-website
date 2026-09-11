@@ -27,18 +27,14 @@ interface Props {
   logoAltLanguage?: string;
   colorSchemeControlLanguage?: string;
   languageSwitcher: {
-    currentLanguageLabel: string;
-    currentLanguageName: string;
-    currentShortLabel: string;
     navigationLabel: string;
     navigationLanguage?: string;
-    options: Array<{
+    target: {
       href: string;
       htmlLanguage: HtmlLanguage;
       locale: Locale;
       languageName: string;
-      shortLabel: string;
-    }>;
+    };
   };
   homeHref?: string;
 }
